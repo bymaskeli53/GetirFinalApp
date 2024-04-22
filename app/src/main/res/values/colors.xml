@@ -5,4 +5,5 @@
     <color name="text_primary">#5D3EBC</color>
     <color name="text_dark">#191919</color>
     <color name="text_secondary">#697488</color>
+    <color name="bg_primary">#5D3EBC</color>
 </resources>
