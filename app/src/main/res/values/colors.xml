@@ -6,4 +6,5 @@
     <color name="text_dark">#191919</color>
     <color name="text_secondary">#697488</color>
     <color name="bg_primary">#5D3EBC</color>
+    <color name="bg_primary_subtle">#F2F0FA</color>
 </resources>

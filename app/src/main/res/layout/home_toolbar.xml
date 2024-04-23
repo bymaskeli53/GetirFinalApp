@@ -13,6 +13,8 @@
         android:layout_height="wrap_content">
 
 
+        
+
         <ImageView
             android:id="@+id/iv_cancel"
             android:layout_width="wrap_content"
@@ -35,7 +37,33 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <include
+            android:id="@+id/toolbar_basket"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            layout="@layout/custom_button_layout"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+
+            />
+
+        <ImageView
+            android:id="@+id/iv_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_delete"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+            android:visibility="gone"
+            />
+
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 
 </androidx.appcompat.widget.Toolbar>
