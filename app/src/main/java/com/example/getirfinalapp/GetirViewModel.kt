@@ -12,15 +12,25 @@ import javax.inject.Inject
 class GetirViewModel @Inject constructor(val repository: GetirRepository) : ViewModel() {
 
 
-    private val _data = MutableStateFlow<Resource<List<Product>>>(Resource.Loading())
-    val data: StateFlow<Resource<List<Product>>> = _data
+    private val _products = MutableStateFlow<Resource<List<Product>>>(Resource.Loading())
+    val products: StateFlow<Resource<List<Product>>> = _products
+
+    private val _suggestedProducts = MutableStateFlow<Resource<List<Product>>>(Resource.Loading())
+    val suggestedProducts: StateFlow<Resource<List<Product>>> = _suggestedProducts
 
     fun fetchData() {
         viewModelScope.launch {
 
             val result = repository.fetchData()
-            _data.value = result
+            _products.emit(Resource.Success(result))
 
+        }
+    }
+
+    fun fetchSuggestedData() {
+        viewModelScope.launch {
+            val result = repository.fetchSuggestedData()
+            _suggestedProducts.emit(Resource.Success(result))
         }
     }
 }

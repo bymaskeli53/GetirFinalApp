@@ -4,8 +4,12 @@ import javax.inject.Inject
 
 class GetirRepository @Inject constructor(val remoteDataSource: RemoteDataSource) {
 
-    suspend fun fetchData(): Resource<List<Product>> {
+    suspend fun fetchData(): List<Product> {
         return remoteDataSource.fetchProducts()
+    }
+
+    suspend fun fetchSuggestedData(): List<Product> {
+        return remoteDataSource.fetchSuggestedProducts()
     }
 
 }

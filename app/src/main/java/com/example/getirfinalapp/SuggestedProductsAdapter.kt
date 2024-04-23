@@ -2,13 +2,12 @@ package com.example.getirfinalapp
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.getirfinalapp.databinding.ItemCardBinding
 
-class BestSellersAdapter(val bestSellerList: List<Product>) : RecyclerView.Adapter<BestSellersAdapter.BestSellersViewHolder>() {
+class SuggestedProductsAdapter(val bestSellerList: List<Product>) : RecyclerView.Adapter<SuggestedProductsAdapter.SuggestedProductsViewHolder>() {
 
-    inner class BestSellersViewHolder(val binding: ItemCardBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class SuggestedProductsViewHolder(val binding: ItemCardBinding) : RecyclerView.ViewHolder(binding.root) {
 
         // val context = binding.root.context
         fun bind(product: Product) {
@@ -21,14 +20,14 @@ class BestSellersAdapter(val bestSellerList: List<Product>) : RecyclerView.Adapt
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BestSellersViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SuggestedProductsViewHolder {
         val binding = ItemCardBinding.inflate(LayoutInflater.from(parent.context),parent,false)
-        return BestSellersViewHolder(binding)
+        return SuggestedProductsViewHolder(binding)
     }
 
     override fun getItemCount() = bestSellerList.size
 
-    override fun onBindViewHolder(holder: BestSellersViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: SuggestedProductsViewHolder, position: Int) {
             holder.bind(product = bestSellerList[position])
     }
 

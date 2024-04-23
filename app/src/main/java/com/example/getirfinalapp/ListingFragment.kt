@@ -14,9 +14,12 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.getirfinalapp.databinding.FragmentListingBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.count
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -42,16 +45,25 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
         val toolbar = activity?.findViewById<Toolbar>(R.id.myToolbar)
         toolbar?.findViewById<ImageView>(R.id.iv_cancel)?.visibility = View.INVISIBLE
 
-
+        viewModel.fetchData()
+        viewModel.fetchSuggestedData()
 
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.data.collect { resource ->
+                viewModel.products.collect { resource ->
                     when (resource) {
                         is Resource.Success -> {
                             val data = resource.data
                             // Recycler View veri gösterilecek.
+                            if (data != null) {
+                                val productsAdapter = ProductsAdapter(data!!)
+                                binding.rvProducts.layoutManager = GridLayoutManager(context,3)
+                                binding.rvProducts.adapter = productsAdapter
+
+
+                            }
+
 
                         }
 
@@ -60,16 +72,43 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
                         }
 
                         is Resource.Loading -> {
-                            // Loading işlemi
+                           print("Hi")
                         }
                     }
 
                 }
+
+
             }
 
         }
 
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.suggestedProducts.collect { resource ->
+                    when (resource) {
+                        is Resource.Success -> {
+                            val data = resource.data
+                            if (data != null) {
+                                val suggestedProductsAdapter = SuggestedProductsAdapter(data!!)
+                                binding.rvSuggested.adapter = suggestedProductsAdapter
+                                binding.rvSuggested.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                            }
+                        }
+
+                        is Resource.Error -> {
+                            val errorMessage = resource.message
+                        }
+
+                        is Resource.Loading -> {
+                            // Handle loading state if needed
+                        }
+                    }
+                }
+            }
+
     }
 
 
+}
 }
