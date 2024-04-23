@@ -8,7 +8,7 @@ class GetirRepository @Inject constructor(val remoteDataSource: RemoteDataSource
         return remoteDataSource.fetchProducts()
     }
 
-    suspend fun fetchSuggestedData(): List<Product> {
+    suspend fun fetchSuggestedData(): List<ProductItem> {
         return remoteDataSource.fetchSuggestedProducts()
     }
 

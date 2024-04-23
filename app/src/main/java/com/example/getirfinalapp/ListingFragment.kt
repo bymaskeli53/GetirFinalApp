@@ -1,6 +1,7 @@
 package com.example.getirfinalapp
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,39 +50,39 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
         viewModel.fetchSuggestedData()
 
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.products.collect { resource ->
-                    when (resource) {
-                        is Resource.Success -> {
-                            val data = resource.data
-                            // Recycler View veri gösterilecek.
-                            if (data != null) {
-                                val productsAdapter = ProductsAdapter(data!!)
-                                binding.rvProducts.layoutManager = GridLayoutManager(context,3)
-                                binding.rvProducts.adapter = productsAdapter
-
-
-                            }
-
-
-                        }
-
-                        is Resource.Error -> {
-                            val errorMessage = resource.message
-                        }
-
-                        is Resource.Loading -> {
-                           print("Hi")
-                        }
-                    }
-
-                }
-
-
-            }
-
-        }
+//        viewLifecycleOwner.lifecycleScope.launch {
+//            repeatOnLifecycle(Lifecycle.State.STARTED) {
+//                viewModel.products.collect { resource ->
+//                    when (resource) {
+//                        is Resource.Success -> {
+//                            val data = resource.data
+//                            // Recycler View veri gösterilecek.
+//                            if (data != null) {
+//                                val productsAdapter = ProductsAdapter(data!!)
+//                                binding.rvProducts.layoutManager = GridLayoutManager(context,3)
+//                                binding.rvProducts.adapter = productsAdapter
+//
+//
+//                            }
+//
+//
+//                        }
+//
+//                        is Resource.Error -> {
+//                            val errorMessage = resource.message
+//                        }
+//
+//                        is Resource.Loading -> {
+//                           print("Hi")
+//                        }
+//                    }
+//
+//                }
+//
+//
+//            }
+//
+//        }
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -90,6 +91,7 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
                         is Resource.Success -> {
                             val data = resource.data
                             if (data != null) {
+                                Log.v("Muhammet", data.size.toString())
                                 val suggestedProductsAdapter = SuggestedProductsAdapter(data!!)
                                 binding.rvSuggested.adapter = suggestedProductsAdapter
                                 binding.rvSuggested.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)

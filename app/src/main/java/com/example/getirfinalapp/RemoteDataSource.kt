@@ -17,7 +17,7 @@ class RemoteDataSource @Inject constructor(val apiService: GetirApiService) {
 //        }
 
 
-    suspend fun fetchSuggestedProducts(): List<Product> = apiService.fetchSuggestedProducts()
+    suspend fun fetchSuggestedProducts(): List<ProductItem> = apiService.fetchSuggestedProducts()
 //        return try {
 //            val response = apiService.fetchSuggestedProducts()
 //            if (response.isSuccessful) {

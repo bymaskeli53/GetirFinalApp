@@ -15,8 +15,8 @@ class GetirViewModel @Inject constructor(val repository: GetirRepository) : View
     private val _products = MutableStateFlow<Resource<List<Product>>>(Resource.Loading())
     val products: StateFlow<Resource<List<Product>>> = _products
 
-    private val _suggestedProducts = MutableStateFlow<Resource<List<Product>>>(Resource.Loading())
-    val suggestedProducts: StateFlow<Resource<List<Product>>> = _suggestedProducts
+    private val _suggestedProducts = MutableStateFlow<Resource<List<ProductItem>>>(Resource.Loading())
+    val suggestedProducts: StateFlow<Resource<List<ProductItem>>> = _suggestedProducts
 
     fun fetchData() {
         viewModelScope.launch {
@@ -30,7 +30,8 @@ class GetirViewModel @Inject constructor(val repository: GetirRepository) : View
     fun fetchSuggestedData() {
         viewModelScope.launch {
             val result = repository.fetchSuggestedData()
-            _suggestedProducts.emit(Resource.Success(result))
+           _suggestedProducts.emit(Resource.Success(result))
+            //_suggestedProducts.value = Resource.Success(result)
         }
     }
 }
