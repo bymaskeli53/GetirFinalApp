@@ -51,39 +51,39 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
         viewModel.fetchSuggestedData()
 
 
-//        viewLifecycleOwner.lifecycleScope.launch {
-//            repeatOnLifecycle(Lifecycle.State.STARTED) {
-//                viewModel.products.collect { resource ->
-//                    when (resource) {
-//                        is Resource.Success -> {
-//                            val data = resource.data
-//                            // Recycler View veri gösterilecek.
-//                            if (data != null) {
-//                                val productsAdapter = ProductsAdapter(data!!)
-//                                binding.rvProducts.layoutManager = GridLayoutManager(context,3)
-//                                binding.rvProducts.adapter = productsAdapter
-//
-//
-//                            }
-//
-//
-//                        }
-//
-//                        is Resource.Error -> {
-//                            val errorMessage = resource.message
-//                        }
-//
-//                        is Resource.Loading -> {
-//                           print("Hi")
-//                        }
-//                    }
-//
-//                }
-//
-//
-//            }
-//
-//        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.products.collect { resource ->
+                    when (resource) {
+                        is Resource.Success -> {
+                            val data = resource.data
+                            // Recycler View veri gösterilecek.
+                            if (data != null) {
+                                val productsAdapter = ProductsAdapter(data!!)
+                                binding.rvProducts.layoutManager = GridLayoutManager(context,3)
+                                binding.rvProducts.adapter = productsAdapter
+
+
+                            }
+
+
+                        }
+
+                        is Resource.Error -> {
+                            val errorMessage = resource.message
+                        }
+
+                        is Resource.Loading -> {
+                           print("Hi")
+                        }
+                    }
+
+                }
+
+
+            }
+
+        }
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {

@@ -10,7 +10,7 @@ interface GetirApiService {
 
 
     @GET("api/products")
-    suspend fun fetchProducts(): List<Product>
+    suspend fun fetchProducts(): List<ProductModelItem>
 
     @GET("api/suggestedProducts")
     suspend fun fetchSuggestedProducts(): List<ProductItem>

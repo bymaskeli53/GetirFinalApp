@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -33,8 +34,8 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val toolbar = activity?.findViewById<Toolbar>(R.id.myToolbar)
-        toolbar?.findViewById<LinearLayout>(R.id.toolbar_basket)?.visibility = View.INVISIBLE
+
+        setupToolbar()
 
         initViews()
 
@@ -50,5 +51,11 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             transformations(CircleCropTransformation())
         }
 
+    }
+
+    private fun setupToolbar() {
+        val toolbar = activity?.findViewById<Toolbar>(R.id.myToolbar)
+        toolbar?.findViewById<LinearLayout>(R.id.toolbar_basket)?.visibility = View.INVISIBLE
+        toolbar?.findViewById<ImageView>(R.id.iv_cancel)?.visibility = View.VISIBLE
     }
 }

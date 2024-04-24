@@ -4,7 +4,7 @@ import javax.inject.Inject
 
 class RemoteDataSource @Inject constructor(val apiService: GetirApiService) {
 
-    suspend fun fetchProducts(): List<Product> = apiService.fetchProducts()
+    suspend fun fetchProducts(): List<ProductModelItem> = apiService.fetchProducts()
 //        return try {
 //            val response = apiService.fetchProducts()
 //            if (response.isSuccessful) {

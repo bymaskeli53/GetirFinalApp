@@ -12,8 +12,8 @@ import javax.inject.Inject
 class GetirViewModel @Inject constructor(val repository: GetirRepository) : ViewModel() {
 
 
-    private val _products = MutableStateFlow<Resource<List<Product>>>(Resource.Loading())
-    val products: StateFlow<Resource<List<Product>>> = _products
+    private val _products = MutableStateFlow<Resource<List<ProductModelItem>>>(Resource.Loading())
+    val products: StateFlow<Resource<List<ProductModelItem>>> = _products
 
     private val _suggestedProducts = MutableStateFlow<Resource<List<ProductItem>>>(Resource.Loading())
     val suggestedProducts: StateFlow<Resource<List<ProductItem>>> = _suggestedProducts
