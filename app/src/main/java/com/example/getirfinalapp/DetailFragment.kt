@@ -1,6 +1,7 @@
 package com.example.getirfinalapp
 
 import android.os.Bundle
+import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +22,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
     private val args: DetailFragmentArgs by navArgs()
 
+    private lateinit var toolbar: Toolbar
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,8 +33,20 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         return binding.root
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val inflater = TransitionInflater.from(requireContext())
+        enterTransition = inflater.inflateTransition(R.transition.slide_in)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val toolbar = activity?.findViewById<Toolbar>(R.id.myToolbar)
+
+        toolbar?.findViewById<ImageView>(R.id.iv_cancel)?.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack()
+        }
 
 
         setupToolbar()
