@@ -7,5 +7,17 @@
     <fragment
         android:id="@+id/listingFragment"
         android:name="com.example.getirfinalapp.ListingFragment"
-        android:label="ListingFragment" />
+        android:label="ListingFragment" >
+        <action
+            android:id="@+id/action_listingFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.example.getirfinalapp.DetailFragment"
+        android:label="DetailFragment" >
+        <argument
+            android:name="Product"
+            app:argType="com.example.getirfinalapp.ProductX" />
+    </fragment>
 </navigation>

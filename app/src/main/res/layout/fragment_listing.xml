@@ -10,7 +10,7 @@
         android:id="@+id/rv_suggested"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="64dp"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
         android:clipToPadding="false"

@@ -15,6 +15,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.getirfinalapp.databinding.FragmentListingBinding
@@ -92,7 +93,13 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
                             val data = resource.data
                             if (data != null) {
                                 Log.v("Muhammet", data.size.toString())
-                                val suggestedProductsAdapter = SuggestedProductsAdapter(data!!)
+                                val suggestedProductsAdapter = SuggestedProductsAdapter(data!!,{ position ->
+                                    val action = ListingFragmentDirections.actionListingFragmentToDetailFragment(resource.data[0].products[position])
+                                    findNavController().navigate(action)
+
+
+
+                                })
                                 binding.rvSuggested.adapter = suggestedProductsAdapter
                                 binding.rvSuggested.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                             }

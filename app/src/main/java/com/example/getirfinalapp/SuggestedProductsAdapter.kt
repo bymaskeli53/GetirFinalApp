@@ -7,7 +7,7 @@ import coil.load
 import coil.transform.CircleCropTransformation
 import com.example.getirfinalapp.databinding.ItemCardBinding
 
-class SuggestedProductsAdapter(val bestSellerList: List<ProductItem>) : RecyclerView.Adapter<SuggestedProductsAdapter.SuggestedProductsViewHolder>() {
+class SuggestedProductsAdapter(val bestSellerList: List<ProductItem>,val onItemClick: (position : Int) -> Unit) : RecyclerView.Adapter<SuggestedProductsAdapter.SuggestedProductsViewHolder>() {
 
     inner class SuggestedProductsViewHolder(val binding: ItemCardBinding) : RecyclerView.ViewHolder(binding.root) {
 
@@ -23,6 +23,8 @@ class SuggestedProductsAdapter(val bestSellerList: List<ProductItem>) : Recycler
                 }
                 tvAttribute.text = product.name
             }
+
+
         }
     }
 
@@ -35,6 +37,7 @@ class SuggestedProductsAdapter(val bestSellerList: List<ProductItem>) : Recycler
 
     override fun onBindViewHolder(holder: SuggestedProductsViewHolder, position: Int) {
             holder.bind(product = bestSellerList[0].products[position])
+            holder.itemView.setOnClickListener { onItemClick(position) }
     }
 
 
