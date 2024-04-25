@@ -7,7 +7,8 @@ import coil.load
 import coil.transform.CircleCropTransformation
 import com.example.getirfinalapp.databinding.ItemCardBinding
 
-class SuggestedProductsAdapter(val bestSellerList: List<ProductItem>,val onItemClick: (position : Int) -> Unit) : RecyclerView.Adapter<SuggestedProductsAdapter.SuggestedProductsViewHolder>() {
+class SuggestedProductsAdapter(private val listener: AddItemClickListener, val productItems: List<ProductItem>, val onItemClick: (position : Int) -> Unit) :
+    RecyclerView.Adapter<SuggestedProductsAdapter.SuggestedProductsViewHolder>() {
 
     inner class SuggestedProductsViewHolder(val binding: ItemCardBinding) : RecyclerView.ViewHolder(binding.root) {
 
@@ -15,13 +16,17 @@ class SuggestedProductsAdapter(val bestSellerList: List<ProductItem>,val onItemC
         fun bind(product: ProductX) {
             with(binding) {
                 tvPrice.text = product.priceText
-                tvProductName.text = product.priceText
+                tvProductName.text = product.category
                 ivCard.load(product.imageURL){
                     placeholder(R.drawable.basket)
                     crossfade(true)
                     transformations(CircleCropTransformation())
                 }
                 tvAttribute.text = product.name
+
+                ivPlus.setOnClickListener {
+                        listener.onAddItemClick(product)
+                }
             }
 
 
@@ -33,11 +38,16 @@ class SuggestedProductsAdapter(val bestSellerList: List<ProductItem>,val onItemC
         return SuggestedProductsViewHolder(binding)
     }
 
-    override fun getItemCount() = bestSellerList.size
+    override fun getItemCount() = productItems.size
 
     override fun onBindViewHolder(holder: SuggestedProductsViewHolder, position: Int) {
-            holder.bind(product = bestSellerList[0].products[position])
+            holder.bind(product = productItems[0].products[position])
             holder.itemView.setOnClickListener { onItemClick(position) }
+    }
+
+    interface AddItemClickListener {
+        fun onAddItemClick(product: ProductX)
+
     }
 
 

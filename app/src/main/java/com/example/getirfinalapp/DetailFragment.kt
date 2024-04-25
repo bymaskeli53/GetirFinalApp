@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
@@ -48,6 +49,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             requireActivity().supportFragmentManager.popBackStack()
         }
 
+        toolbar?.findViewById<TextView>(R.id.tv_toolbar_title)?.text = "Ürün Detayı"
 
         setupToolbar()
 

@@ -3,6 +3,8 @@ package com.example.getirfinalapp
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import coil.transform.CircleCropTransformation
 import com.example.getirfinalapp.databinding.ItemCardBinding
 
 class ProductsAdapter(val bestSellerList: List<ProductModelItem>) : RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder>() {
@@ -14,7 +16,11 @@ class ProductsAdapter(val bestSellerList: List<ProductModelItem>) : RecyclerView
             with(binding) {
                 tvPrice.text = product.priceText
                 tvProductName.text = product.name
-                ivCard.setImageResource(R.drawable.basket)
+                ivCard.load(product.imageURL){
+                    placeholder(R.drawable.basket)
+                    crossfade(true)
+                    transformations(CircleCropTransformation())
+                }
                 tvAttribute.text = product.attribute
             }
         }
@@ -29,6 +35,8 @@ class ProductsAdapter(val bestSellerList: List<ProductModelItem>) : RecyclerView
 
     override fun onBindViewHolder(holder: ProductsViewHolder, position: Int) {
         holder.bind(product = bestSellerList[0].products[position])
+
+
     }
 
 

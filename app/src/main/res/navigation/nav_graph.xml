@@ -11,6 +11,9 @@
         <action
             android:id="@+id/action_listingFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_listingFragment_to_basketFragment"
+            app:destination="@id/basketFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
@@ -18,6 +21,12 @@
         android:label="DetailFragment" >
         <argument
             android:name="Product"
-            app:argType="com.example.getirfinalapp.ProductX" />
+            app:argType="com.example.getirfinalapp.ProductX"
+            />
+
     </fragment>
+    <fragment
+        android:id="@+id/basketFragment"
+        android:name="com.example.getirfinalapp.BasketFragment"
+        android:label="BasketFragment" />
 </navigation>

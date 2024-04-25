@@ -23,9 +23,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.count
 import kotlinx.coroutines.launch
+import kotlin.time.times
 
 @AndroidEntryPoint
-class ListingFragment : Fragment(R.layout.fragment_listing) {
+class ListingFragment : Fragment(R.layout.fragment_listing),
+    SuggestedProductsAdapter.AddItemClickListener {
 
     private var binding: FragmentListingBinding by autoCleared()
 
@@ -46,9 +48,21 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
 
         val toolbar = activity?.findViewById<Toolbar>(R.id.myToolbar)
         toolbar?.findViewById<ImageView>(R.id.iv_cancel)?.visibility = View.INVISIBLE
+        toolbar?.findViewById<LinearLayout>(R.id.toolbar_basket)?.visibility = View.VISIBLE
+        toolbar?.findViewById<TextView>(R.id.tv_toolbar_title)?.text = "Ürünler"
+        toolbar?.findViewById<LinearLayout>(R.id.toolbar_basket)?.setOnClickListener {
+            val action = ListingFragmentDirections.actionListingFragmentToBasketFragment()
+            findNavController().navigate(action)
+
+            // TODO: Toolbar kontrolleri eklenecek
+        }
 
         viewModel.fetchData()
         viewModel.fetchSuggestedData()
+
+        viewModel.quantity.observe(viewLifecycleOwner,{
+            binding.rvSuggested.rootView.findViewById<ImageView>(R.id.iv_plus)
+        })
 
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -60,8 +74,10 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
                             // Recycler View veri gösterilecek.
                             if (data != null) {
                                 val productsAdapter = ProductsAdapter(data!!)
-                                binding.rvProducts.layoutManager = GridLayoutManager(context,3)
+                                binding.rvProducts.layoutManager = GridLayoutManager(context, 3)
                                 binding.rvProducts.adapter = productsAdapter
+
+
 
 
                             }
@@ -74,7 +90,7 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
                         }
 
                         is Resource.Loading -> {
-                           print("Hi")
+                            print("Hi")
                         }
                     }
 
@@ -93,15 +109,29 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
                             val data = resource.data
                             if (data != null) {
                                 Log.v("Muhammet", data.size.toString())
-                                val suggestedProductsAdapter = SuggestedProductsAdapter(data!!,{ position ->
-                                    val action = ListingFragmentDirections.actionListingFragmentToDetailFragment(resource.data[0].products[position])
-                                    findNavController().navigate(action)
+                                val suggestedProductsAdapter =
+                                    SuggestedProductsAdapter(
+                                        this@ListingFragment,
+                                        data!!,
+                                        { position ->
+                                            val action =
+                                                ListingFragmentDirections.actionListingFragmentToDetailFragment(
+                                                    resource.data[0].products[position]
+                                                )
+                                            findNavController().navigate(action)
 
 
-
-                                })
+                                        })
                                 binding.rvSuggested.adapter = suggestedProductsAdapter
-                                binding.rvSuggested.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                                binding.rvSuggested.layoutManager = LinearLayoutManager(
+                                    context,
+                                    LinearLayoutManager.HORIZONTAL,
+                                    false
+                                )
+                                data[0].products[0].price?.times(
+                                    (viewModel.quantity.value?.toDouble()
+                                        ?: 0.0)
+                                )
                             }
                         }
 
@@ -116,8 +146,12 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
                 }
             }
 
+        }
+
+
     }
 
-
-}
+    override fun onAddItemClick(product: ProductX) {
+        viewModel.increaseQuantity(product)
+    }
 }
