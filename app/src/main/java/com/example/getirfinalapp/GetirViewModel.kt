@@ -21,6 +21,9 @@ class GetirViewModel @Inject constructor(val repository: GetirRepository) : View
     private val _quantity = MutableLiveData<Int>( 0)
     val quantity: LiveData<Int> get() =  _quantity
 
+    private val _totalPrice = MutableLiveData<Double>( 0.0)
+    val totalPrice: LiveData<Double> get() =  _totalPrice
+
 
 
     private val _suggestedProducts = MutableStateFlow<Resource<List<ProductItem>>>(Resource.Loading())
@@ -45,7 +48,8 @@ class GetirViewModel @Inject constructor(val repository: GetirRepository) : View
 
     fun increaseQuantity(productX: ProductX) {
         _quantity.value = _quantity.value!! + 1
-        val totalPrice = productX.price?.times(quantity.value?.toDouble()!!)
+       // _totalPrice.value = _totalPrice.value?.plus(productX.price?.times(quantity.value?.toDouble()!!)!!)
+        _totalPrice.value = productX.price?.let { _totalPrice.value?.plus(it) }
 
 
 

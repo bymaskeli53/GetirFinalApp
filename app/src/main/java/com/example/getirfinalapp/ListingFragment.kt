@@ -1,5 +1,6 @@
 package com.example.getirfinalapp
 
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -50,6 +51,13 @@ class ListingFragment : Fragment(R.layout.fragment_listing),
         toolbar?.findViewById<ImageView>(R.id.iv_cancel)?.visibility = View.INVISIBLE
         toolbar?.findViewById<LinearLayout>(R.id.toolbar_basket)?.visibility = View.VISIBLE
         toolbar?.findViewById<TextView>(R.id.tv_toolbar_title)?.text = "Ürünler"
+
+
+//        toolbar?.findViewById<LinearLayout>(R.id.toolbar_basket)
+//            ?.findViewById<TextView>(R.id.tv_totalPrice)?.text =
+//            precisedTotalPrice.toString()
+
+
         toolbar?.findViewById<LinearLayout>(R.id.toolbar_basket)?.setOnClickListener {
             val action = ListingFragmentDirections.actionListingFragmentToBasketFragment()
             findNavController().navigate(action)
@@ -60,10 +68,17 @@ class ListingFragment : Fragment(R.layout.fragment_listing),
         viewModel.fetchData()
         viewModel.fetchSuggestedData()
 
-        viewModel.quantity.observe(viewLifecycleOwner,{
+        viewModel.quantity.observe(viewLifecycleOwner, {
             binding.rvSuggested.rootView.findViewById<ImageView>(R.id.iv_plus)
         })
 
+
+        viewModel.totalPrice.observe(viewLifecycleOwner, {
+            val precisedTotalPrice =
+                Math.round(viewModel.totalPrice.value?.times(1000.0) ?: 1.0) / 1000.0
+            toolbar?.findViewById<LinearLayout>(R.id.toolbar_basket)
+                ?.findViewById<TextView>(R.id.tv_totalPrice)?.text = precisedTotalPrice.toString()
+        })
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -76,8 +91,6 @@ class ListingFragment : Fragment(R.layout.fragment_listing),
                                 val productsAdapter = ProductsAdapter(data!!)
                                 binding.rvProducts.layoutManager = GridLayoutManager(context, 3)
                                 binding.rvProducts.adapter = productsAdapter
-
-
 
 
                             }
@@ -154,4 +167,6 @@ class ListingFragment : Fragment(R.layout.fragment_listing),
     override fun onAddItemClick(product: ProductX) {
         viewModel.increaseQuantity(product)
     }
+
+
 }
