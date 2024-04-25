@@ -14,9 +14,10 @@
         tools:src="@drawable/basket" />
 
     <ImageButton
+
         android:id="@+id/iv_plus"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:src="@drawable/ic_plus"
         app:layout_constraintEnd_toEndOf="@id/iv_card"
         app:layout_constraintTop_toTopOf="@id/iv_card"

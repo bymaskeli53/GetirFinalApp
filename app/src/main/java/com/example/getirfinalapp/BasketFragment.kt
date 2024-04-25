@@ -9,6 +9,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.getirfinalapp.databinding.FragmentBasketBinding
 
 class BasketFragment : Fragment(R.layout.fragment_basket) {
@@ -40,6 +41,22 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
         toolbar?.findViewById<ImageView>(R.id.iv_cancel)?.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
         }
+
+//        val list = mutableListOf("Hi","Hello")
+//        val adapter = BasketAdapter(list)
+//        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+//        binding.recyclerView.adapter = adapter
+//
+//
+//        binding.button.setOnClickListener {
+//            for (i in list.indices) {
+//                list.removeAt(i)
+//                adapter.notifyItemRemoved(i)
+//
+//            }
+//
+//        }
+
 
     }
 

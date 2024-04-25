@@ -50,6 +50,7 @@ class ListingFragment : Fragment(R.layout.fragment_listing),
         val toolbar = activity?.findViewById<Toolbar>(R.id.myToolbar)
         toolbar?.findViewById<ImageView>(R.id.iv_cancel)?.visibility = View.INVISIBLE
         toolbar?.findViewById<LinearLayout>(R.id.toolbar_basket)?.visibility = View.VISIBLE
+        toolbar?.findViewById<ImageView>(R.id.iv_delete)?.visibility = View.INVISIBLE
         toolbar?.findViewById<TextView>(R.id.tv_toolbar_title)?.text = "Ürünler"
 
 
