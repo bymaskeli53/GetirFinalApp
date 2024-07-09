@@ -38,7 +38,7 @@ class SuggestedProductsAdapter(private val listener: AddItemClickListener, val p
         return SuggestedProductsViewHolder(binding)
     }
 
-    override fun getItemCount() = productItems.size
+    override fun getItemCount() = productItems[0].products.size
 
     override fun onBindViewHolder(holder: SuggestedProductsViewHolder, position: Int) {
             holder.bind(product = productItems[0].products[position])

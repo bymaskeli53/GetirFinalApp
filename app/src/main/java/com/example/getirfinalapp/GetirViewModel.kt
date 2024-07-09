@@ -12,7 +12,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class GetirViewModel @Inject constructor(val repository: GetirRepository) : ViewModel() {
+class GetirViewModel @Inject constructor(val repository: GetirRepository,val productDao: ProductDao) : ViewModel() {
+
+
 
 
     private val _products = MutableStateFlow<Resource<List<ProductModelItem>>>(Resource.Loading())
@@ -23,6 +25,8 @@ class GetirViewModel @Inject constructor(val repository: GetirRepository) : View
 
     private val _totalPrice = MutableLiveData<Double>( 0.0)
     val totalPrice: LiveData<Double> get() =  _totalPrice
+
+
 
 
 
@@ -53,6 +57,12 @@ class GetirViewModel @Inject constructor(val repository: GetirRepository) : View
 
 
 
+    }
+
+    fun insertProductToLocal(productX: ProductX) {
+        viewModelScope.launch {
+            productDao.insertProduct(productX)
+        }
     }
 
 

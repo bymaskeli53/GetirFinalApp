@@ -31,7 +31,7 @@ class ProductsAdapter(val bestSellerList: List<ProductModelItem>) : RecyclerView
         return ProductsViewHolder(binding)
     }
 
-    override fun getItemCount() = bestSellerList.size
+    override fun getItemCount() = bestSellerList[0].products.size
 
     override fun onBindViewHolder(holder: ProductsViewHolder, position: Int) {
         holder.bind(product = bestSellerList[0].products[position])

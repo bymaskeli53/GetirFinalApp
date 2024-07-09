@@ -32,12 +32,14 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     ): View? {
         binding = FragmentDetailBinding.inflate(inflater,container,false)
         return binding.root
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val inflater = TransitionInflater.from(requireContext())
         enterTransition = inflater.inflateTransition(R.transition.slide_in)
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -60,6 +62,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     private fun initViews() {
         binding.tvName.text = args.Product.name
         binding.tvPrice.text = args.Product.priceText
+
 
         binding.ivProduct.load(args.Product.imageURL){
             placeholder(R.drawable.basket)

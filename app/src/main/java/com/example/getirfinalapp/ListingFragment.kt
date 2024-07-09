@@ -89,9 +89,13 @@ class ListingFragment : Fragment(R.layout.fragment_listing),
                             val data = resource.data
                             // Recycler View veri gösterilecek.
                             if (data != null) {
-                                val productsAdapter = ProductsAdapter(data!!)
-                                binding.rvProducts.layoutManager = GridLayoutManager(context, 3)
-                                binding.rvProducts.adapter = productsAdapter
+                               // val flattenedProducts : List<ProductXX>? = data.flatMap { it.products }
+
+                                    val productsAdapter = ProductsAdapter(data!!)
+                                    binding.rvProducts.layoutManager = GridLayoutManager(context, 3)
+                                    binding.rvProducts.adapter = productsAdapter
+
+
 
 
                             }
@@ -167,6 +171,8 @@ class ListingFragment : Fragment(R.layout.fragment_listing),
 
     override fun onAddItemClick(product: ProductX) {
         viewModel.increaseQuantity(product)
+        viewModel.insertProductToLocal(product)
+
     }
 
 
