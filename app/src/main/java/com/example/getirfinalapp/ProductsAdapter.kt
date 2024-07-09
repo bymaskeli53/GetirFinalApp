@@ -7,7 +7,7 @@ import coil.load
 import coil.transform.CircleCropTransformation
 import com.example.getirfinalapp.databinding.ItemCardBinding
 
-class ProductsAdapter(val bestSellerList: List<ProductModelItem>) : RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder>() {
+class ProductsAdapter(private val listener: AddItemClickListener,val bestSellerList: List<ProductModelItem>) : RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder>() {
 
     inner class ProductsViewHolder(val binding: ItemCardBinding) : RecyclerView.ViewHolder(binding.root) {
 
@@ -22,6 +22,10 @@ class ProductsAdapter(val bestSellerList: List<ProductModelItem>) : RecyclerView
                     transformations(CircleCropTransformation())
                 }
                 tvAttribute.text = product.attribute
+
+                ivPlus.setOnClickListener {
+                    listener.onAddItemClick(product)
+                }
             }
         }
     }
@@ -37,6 +41,10 @@ class ProductsAdapter(val bestSellerList: List<ProductModelItem>) : RecyclerView
         holder.bind(product = bestSellerList[0].products[position])
 
 
+    }
+
+    interface AddItemClickListener {
+        fun onAddItemClick(product: ProductXX)
     }
 
 

@@ -59,9 +59,21 @@ class GetirViewModel @Inject constructor(val repository: GetirRepository,val pro
 
     }
 
+    fun increaseQuantity(productX: ProductXX) {
+        _quantity.value = _quantity.value!! + 1
+        // _totalPrice.value = _totalPrice.value?.plus(productX.price?.times(quantity.value?.toDouble()!!)!!)
+        _totalPrice.value = productX.price?.let { _totalPrice.value?.plus(it) }
+    }
+
     fun insertProductToLocal(productX: ProductX) {
         viewModelScope.launch {
             productDao.insertProduct(productX)
+        }
+    }
+
+    fun insertProductToLocal(productXX: ProductXX) {
+        viewModelScope.launch {
+            productDao.insertProduct(productXX)
         }
     }
 

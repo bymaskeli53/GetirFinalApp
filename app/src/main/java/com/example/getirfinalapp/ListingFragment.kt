@@ -1,6 +1,5 @@
 package com.example.getirfinalapp
 
-import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,7 +12,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
@@ -21,14 +19,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.getirfinalapp.databinding.FragmentListingBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.count
 import kotlinx.coroutines.launch
-import kotlin.time.times
 
 @AndroidEntryPoint
 class ListingFragment : Fragment(R.layout.fragment_listing),
-    SuggestedProductsAdapter.AddItemClickListener {
+    SuggestedProductsAdapter.AddItemClickListener, ProductsAdapter.AddItemClickListener {
 
     private var binding: FragmentListingBinding by autoCleared()
 
@@ -89,13 +84,9 @@ class ListingFragment : Fragment(R.layout.fragment_listing),
                             val data = resource.data
                             // Recycler View veri gösterilecek.
                             if (data != null) {
-                               // val flattenedProducts : List<ProductXX>? = data.flatMap { it.products }
-
-                                    val productsAdapter = ProductsAdapter(data!!)
-                                    binding.rvProducts.layoutManager = GridLayoutManager(context, 3)
-                                    binding.rvProducts.adapter = productsAdapter
-
-
+                                val productsAdapter = ProductsAdapter(this@ListingFragment,data!!)
+                                binding.rvProducts.layoutManager = GridLayoutManager(context, 3)
+                                binding.rvProducts.adapter = productsAdapter
 
 
                             }
@@ -173,6 +164,11 @@ class ListingFragment : Fragment(R.layout.fragment_listing),
         viewModel.increaseQuantity(product)
         viewModel.insertProductToLocal(product)
 
+    }
+
+    override fun onAddItemClick(product: ProductXX) {
+        viewModel.increaseQuantity(product)
+        viewModel.insertProductToLocal(product)
     }
 
 
