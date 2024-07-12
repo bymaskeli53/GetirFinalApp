@@ -12,4 +12,6 @@ class GetirRepository @Inject constructor(val remoteDataSource: RemoteDataSource
         return remoteDataSource.fetchSuggestedProducts()
     }
 
+
+
 }

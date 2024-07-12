@@ -26,6 +26,9 @@ class GetirViewModel @Inject constructor(val repository: GetirRepository,val pro
     private val _totalPrice = MutableLiveData<Double>( 0.0)
     val totalPrice: LiveData<Double> get() =  _totalPrice
 
+    private val _productsInBasket = MutableLiveData<List<ProductXX>>()
+    val productsInBasket: LiveData<List<ProductXX>> get() =  _productsInBasket
+
 
 
 
@@ -77,5 +80,32 @@ class GetirViewModel @Inject constructor(val repository: GetirRepository,val pro
         }
     }
 
+    fun updateProductToLocal(productX: ProductX) {
+        viewModelScope.launch {
+            productDao.updateProduct(productX)
 
+        }
+    }
+
+    fun updateProductToLocal(productXX: ProductXX) {
+        viewModelScope.launch {
+            productDao.updateProduct(productXX)
+
+        }
+    }
+
+    fun getProductsFromLocal() {
+        viewModelScope.launch {
+            _productsInBasket.value = productDao.getProducts()
+
+        }
+
+    }
+
+    fun deleteProductsFromLocal() {
+        viewModelScope.launch {
+            productDao.deleteAllProducts()
+
+        }
+    }
 }

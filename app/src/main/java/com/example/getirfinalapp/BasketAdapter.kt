@@ -5,12 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.getirfinalapp.databinding.ItemBasketBinding
 
-class BasketAdapter(val list: List<String>) : RecyclerView.Adapter<BasketAdapter.BasketViewHolder>() {
+class BasketAdapter(val productsInBasket: List<ProductXX>) : RecyclerView.Adapter<BasketAdapter.BasketViewHolder>() {
 
     inner class BasketViewHolder(val binding: ItemBasketBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+        RecyclerView.ViewHolder(binding.root)
 
-    }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BasketViewHolder {
         val binding = ItemBasketBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -18,10 +18,11 @@ class BasketAdapter(val list: List<String>) : RecyclerView.Adapter<BasketAdapter
     }
 
     override fun getItemCount(): Int {
-        return list.size
+        return productsInBasket.size
     }
 
     override fun onBindViewHolder(holder: BasketViewHolder, position: Int) {
-        holder.binding.tvBasket.text = list[position]
+        holder.binding.tvBasket.text = productsInBasket[position].name
+        holder.binding.tvPrice.text = productsInBasket[position].price.toString()
     }
 }
