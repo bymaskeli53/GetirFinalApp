@@ -106,6 +106,7 @@ class GetirViewModel @Inject constructor(val repository: GetirRepository,val pro
         viewModelScope.launch {
             productDao.deleteAllProducts()
 
+
         }
     }
 }

@@ -16,5 +16,6 @@ data class ProductXX(
     val price: Double?,
     val priceText: String?,
     val shortDescription: String?,
-    val thumbnailURL: String?
+    val thumbnailURL: String?,
+    val quantity: Int?
 ) : Parcelable
