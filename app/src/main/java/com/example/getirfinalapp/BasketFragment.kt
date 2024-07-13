@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.getirfinalapp.databinding.FragmentBasketBinding
+import com.example.getirfinalapp.databinding.HomeToolbarBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -28,31 +29,44 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentBasketBinding.inflate(inflater,container,false)
+        binding = FragmentBasketBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-       val toolbar = activity?.findViewById<Toolbar>(R.id.myToolbar)
-        val toolbarText =toolbar?.findViewById<TextView>(R.id.tv_toolbar_title)
-        toolbarText?.text = "Sepetim" // TODO: String multilanguage yapılacak
+        val toolbar = activity?.findViewById<Toolbar>(R.id.myToolbar)
 
-        toolbar?.findViewById<ImageView>(R.id.iv_delete)?.visibility = View.VISIBLE
+        val toolbarBinding = HomeToolbarBinding.bind(requireActivity().findViewById(R.id.myToolbar))
+        toolbarBinding.tvToolbarTitle.text = "Sepetim"
 
-        toolbar?.findViewById<LinearLayout>(R.id.toolbar_basket)?.visibility = View.GONE
+//        val toolbarText = toolbar?.findViewById<TextView>(R.id.tv_toolbar_title)
+//        toolbarText?.text = "Sepetim"
 
-        toolbar?.findViewById<ImageView>(R.id.iv_cancel)?.visibility = View.VISIBLE
+       // toolbar?.findViewById<ImageView>(R.id.iv_delete)?.visibility = View.VISIBLE
+        toolbarBinding.ivDelete.visibility = View.VISIBLE
 
-        toolbar?.findViewById<ImageView>(R.id.iv_cancel)?.setOnClickListener {
+      // toolbar?.findViewById<LinearLayout>(R.id.toolbar_basket)?.visibility = View.GONE
+        toolbarBinding.toolbarBasket.root.visibility = View.GONE
+
+       // toolbar?.findViewById<ImageView>(R.id.iv_cancel)?.visibility = View.VISIBLE
+        toolbarBinding.ivCancel.visibility = View.VISIBLE
+
+//        toolbar?.findViewById<ImageView>(R.id.iv_cancel)?.setOnClickListener {
+//            requireActivity().supportFragmentManager.popBackStack()
+//        }
+
+        toolbarBinding.ivCancel.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
         }
+
+
 
         viewModel.getProductsFromLocal()
         // viewModel.deleteProductsFromLocal()
 
-        viewModel.productsInBasket.observe(viewLifecycleOwner,{
+        viewModel.productsInBasket.observe(viewLifecycleOwner, {
             val adapter = BasketAdapter(it)
             binding.rvBasket.layoutManager = LinearLayoutManager(requireContext())
             binding.rvBasket.adapter = adapter
@@ -60,20 +74,19 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
 
         toolbar?.findViewById<ImageView>(R.id.iv_delete)?.setOnClickListener {
             if (viewModel.productsInBasket.value?.size != 0) {
-                val dialog =  AlertDialog.Builder(requireContext())
+                val dialog = AlertDialog.Builder(requireContext())
                     .setTitle("Sepeti boşaltmak istiyor musunuz?")
-                    .setNegativeButton("Evet") { dialog , view ->
+                    .setNegativeButton("Evet") { dialog, view ->
                         viewModel.deleteProductsFromLocal()
                         viewModel.getProductsFromLocal()
 
                         dialog.dismiss()
                     }
-                    .setPositiveButton("Hayır") {dialog,_ ->
+                    .setPositiveButton("Hayır") { dialog, _ ->
                         dialog.dismiss()
                     }.create()
                 dialog.show()
             }
-
 
 
 //            viewModel.deleteProductsFromLocal()
@@ -83,7 +96,6 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
         }
 
         // TODO: Quantity manuel olarak eklenecek.
-
 
 
 //        val list = mutableListOf("Hi","Hello")
