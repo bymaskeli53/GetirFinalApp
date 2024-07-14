@@ -31,8 +31,6 @@ class GetirViewModel @Inject constructor(val repository: GetirRepository,val pro
 
 
 
-
-
     private val _suggestedProducts = MutableStateFlow<Resource<List<ProductItem>>>(Resource.Loading())
     val suggestedProducts: StateFlow<Resource<List<ProductItem>>> = _suggestedProducts
 
@@ -83,13 +81,14 @@ class GetirViewModel @Inject constructor(val repository: GetirRepository,val pro
     fun updateProductToLocal(productX: ProductX) {
         viewModelScope.launch {
             productDao.updateProduct(productX)
+            productDao.updateProduct(productX.copy(quantity = quantity.value))
 
         }
     }
 
     fun updateProductToLocal(productXX: ProductXX) {
         viewModelScope.launch {
-            productDao.updateProduct(productXX)
+            productDao.updateProduct(productXX.copy(quantity = (quantity.value)?.plus(1)))
 
         }
     }
@@ -97,6 +96,8 @@ class GetirViewModel @Inject constructor(val repository: GetirRepository,val pro
     fun getProductsFromLocal() {
         viewModelScope.launch {
             _productsInBasket.value = productDao.getProducts()
+
+
 
         }
 

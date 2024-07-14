@@ -72,6 +72,8 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
             binding.rvBasket.adapter = adapter
         })
 
+
+
         toolbar?.findViewById<ImageView>(R.id.iv_delete)?.setOnClickListener {
             if (viewModel.productsInBasket.value?.size != 0) {
                 val dialog = AlertDialog.Builder(requireContext())

@@ -1,51 +1,27 @@
 package com.example.getirfinalapp
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.CircleCropTransformation
-import com.example.getirfinalapp.databinding.ItemCardBinding
 
-class ProductsAdapter(private val listener: AddItemClickListener,val bestSellerList: List<ProductModelItem>) : RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder>() {
+class ProductsAdapter(
+    val listener: AddItemClickListener<ProductXX>,
+    items: List<ProductXX>
+) : BaseProductsAdapter<ProductXX>(listener, items) {
 
-    inner class ProductsViewHolder(val binding: ItemCardBinding) : RecyclerView.ViewHolder(binding.root) {
+    override fun onBindItem(holder: BaseProductsViewHolder, item: ProductXX, position: Int) {
+        with(holder.binding) {
+            tvPrice.text = item.priceText
+            tvProductName.text = item.name
+            ivCard.load(item.imageURL) {
+                placeholder(R.drawable.basket)
+                crossfade(true)
+                transformations(CircleCropTransformation())
+            }
+            tvAttribute.text = item.attribute
 
-        // val context = binding.root.context
-        fun bind(product: ProductXX) {
-            with(binding) {
-                tvPrice.text = product.priceText
-                tvProductName.text = product.name
-                ivCard.load(product.imageURL){
-                    placeholder(R.drawable.basket)
-                    crossfade(true)
-                    transformations(CircleCropTransformation())
-                }
-                tvAttribute.text = product.attribute
-
-                ivPlus.setOnClickListener {
-                    listener.onAddItemClick(product)
-                }
+            ivPlus.setOnClickListener {
+                listener.onAddItemClick(item)
             }
         }
     }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductsViewHolder {
-        val binding = ItemCardBinding.inflate(LayoutInflater.from(parent.context),parent,false)
-        return ProductsViewHolder(binding)
-    }
-
-    override fun getItemCount() = bestSellerList[0].products.size
-
-    override fun onBindViewHolder(holder: ProductsViewHolder, position: Int) {
-        holder.bind(product = bestSellerList[0].products[position])
-
-
-    }
-
-    interface AddItemClickListener {
-        fun onAddItemClick(product: ProductXX)
-    }
-
-
 }

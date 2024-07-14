@@ -22,8 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ListingFragment : Fragment(R.layout.fragment_listing),
-    SuggestedProductsAdapter.AddItemClickListener, ProductsAdapter.AddItemClickListener {
+class ListingFragment : Fragment(R.layout.fragment_listing) {
 
     private var binding: FragmentListingBinding by autoCleared()
 
@@ -84,7 +83,16 @@ class ListingFragment : Fragment(R.layout.fragment_listing),
                             val data = resource.data
                             // Recycler View veri gösterilecek.
                             if (data != null) {
-                                val productsAdapter = ProductsAdapter(this@ListingFragment,data!!)
+                                //   val productsAdapter = ProductsAdapter(this@ListingFragment,data!!)
+
+                                val productsAdapter = ProductsAdapter(listener = object :
+                                    BaseProductsAdapter.AddItemClickListener<ProductXX> {
+                                    override fun onAddItemClick(item: ProductXX) {
+                                        viewModel.increaseQuantity(item)
+                                        viewModel.insertProductToLocal(item)
+                                        viewModel.updateProductToLocal(item)
+                                    }
+                                }, items = data!![0].products)
                                 binding.rvProducts.layoutManager = GridLayoutManager(context, 3)
                                 binding.rvProducts.adapter = productsAdapter
 
@@ -118,19 +126,35 @@ class ListingFragment : Fragment(R.layout.fragment_listing),
                             val data = resource.data
                             if (data != null) {
                                 Log.v("Muhammet", data.size.toString())
+//                                val suggestedProductsAdapter =
+//                                    SuggestedProductsAdapter(
+//                                        this@ListingFragment,
+//                                        data!!,
+//                                        { position ->
+//                                            val action =
+//                                                ListingFragmentDirections.actionListingFragmentToDetailFragment(
+//                                                    resource.data[0].products[position]
+//                                                )
+//                                            findNavController().navigate(action)
+//
+//
+//                                        })
+
                                 val suggestedProductsAdapter =
-                                    SuggestedProductsAdapter(
-                                        this@ListingFragment,
-                                        data!!,
-                                        { position ->
-                                            val action =
-                                                ListingFragmentDirections.actionListingFragmentToDetailFragment(
-                                                    resource.data[0].products[position]
-                                                )
-                                            findNavController().navigate(action)
-
-
-                                        })
+                                    SuggestedProductsAdapter(listener = object :
+                                        BaseProductsAdapter.AddItemClickListener<ProductX> {
+                                        override fun onAddItemClick(item: ProductX) {
+                                            viewModel.increaseQuantity(item)
+                                            viewModel.insertProductToLocal(item)
+                                            viewModel.updateProductToLocal(item)
+                                        }
+                                    }, items = data!![0].products, onItemClick = { position ->
+                                        val action =
+                                            ListingFragmentDirections.actionListingFragmentToDetailFragment(
+                                                resource.data[0].products[position]
+                                            )
+                                        findNavController().navigate(action)
+                                    })
                                 binding.rvSuggested.adapter = suggestedProductsAdapter
                                 binding.rvSuggested.layoutManager = LinearLayoutManager(
                                     context,
@@ -160,16 +184,17 @@ class ListingFragment : Fragment(R.layout.fragment_listing),
 
     }
 
-    override fun onAddItemClick(product: ProductX) {
-        viewModel.increaseQuantity(product)
-        viewModel.insertProductToLocal(product)
-
-    }
-
-    override fun onAddItemClick(product: ProductXX) {
-        viewModel.increaseQuantity(product)
-        viewModel.insertProductToLocal(product)
-    }
+//    override fun onAddItemClick(product: ProductX) {
+//        viewModel.increaseQuantity(product)
+//        viewModel.insertProductToLocal(product)
+//        viewModel.updateProductToLocal(product)
+//    }
+//
+//    override fun onAddItemClick(product: ProductXX) {
+//        viewModel.increaseQuantity(product)
+//        viewModel.insertProductToLocal(product)
+//        viewModel.updateProductToLocal(product)
+//    }
 
 
 }
