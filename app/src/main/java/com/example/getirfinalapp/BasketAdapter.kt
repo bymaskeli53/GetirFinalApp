@@ -25,5 +25,7 @@ class BasketAdapter(val productsInBasket: List<ProductXX>) : RecyclerView.Adapte
         holder.binding.tvBasket.text = productsInBasket[position].name
         holder.binding.tvPrice.text = productsInBasket[position].price.toString()
         holder.binding.tvQuantity.text = productsInBasket[position].quantity.toString()
+
+
     }
 }

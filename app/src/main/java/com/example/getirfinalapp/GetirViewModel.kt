@@ -46,14 +46,28 @@ class GetirViewModel @Inject constructor(val repository: GetirRepository,val pro
     fun fetchSuggestedData() {
         viewModelScope.launch {
             val result = repository.fetchSuggestedData()
-           _suggestedProducts.emit(Resource.Success(result))
+            _suggestedProducts.emit(Resource.Success(result))
             //_suggestedProducts.value = Resource.Success(result)
         }
     }
 
     fun increaseQuantity(productX: ProductX) {
+        viewModelScope.launch {
+            val existingProduct = productDao.getProductById(productX.id)
+            if (existingProduct != null) {
+                existingProduct.quantity += 1
+                productDao.updateProduct(existingProduct)
+            } else {
+                productX.quantity = 1
+                productDao.insertProduct(productX)
+            }
+        }
+
+        getProductsFromLocal()
         _quantity.value = _quantity.value!! + 1
-       // _totalPrice.value = _totalPrice.value?.plus(productX.price?.times(quantity.value?.toDouble()!!)!!)
+//        productX.quantity = productX.quantity?.plus(1)!!
+
+        // _totalPrice.value = _totalPrice.value?.plus(productX.price?.times(quantity.value?.toDouble()!!)!!)
         _totalPrice.value = productX.price?.let { _totalPrice.value?.plus(it) }
 
 
@@ -80,8 +94,9 @@ class GetirViewModel @Inject constructor(val repository: GetirRepository,val pro
 
     fun updateProductToLocal(productX: ProductX) {
         viewModelScope.launch {
+          //  productDao.updateProduct(productX)
+            //productDao.updateProduct(productX.copy(quantity = quantity.value))
             productDao.updateProduct(productX)
-            productDao.updateProduct(productX.copy(quantity = quantity.value))
 
         }
     }

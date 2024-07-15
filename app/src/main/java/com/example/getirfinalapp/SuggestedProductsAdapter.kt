@@ -22,6 +22,7 @@ class SuggestedProductsAdapter(
 
             ivPlus.setOnClickListener {
                 listener.onAddItemClick(item)
+               // notifyItemChanged(position)
             }
         }
 

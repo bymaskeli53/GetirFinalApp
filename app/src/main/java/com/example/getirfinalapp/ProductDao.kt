@@ -22,6 +22,9 @@ interface ProductDao {
 //        @Query("SELECT * FROM PRODUCT")
 //        suspend fun <T>getProducts():  List<T>
 
+    @Query("SELECT * FROM PRODUCT WHERE id = :id LIMIT 1")
+    suspend fun getProductById(id: String): ProductX?
+
 
     @Update
     suspend fun updateProduct(productX: ProductX)
