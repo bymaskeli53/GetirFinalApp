@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="120dp"
+    android:padding="8dp"
     android:layout_height="wrap_content">
 
     <ImageView
@@ -38,11 +39,13 @@
 
     <TextView
         android:id="@+id/tv_product_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/open_sans"
         android:textColor="@color/text_dark"
         android:textStyle="bold"
+        android:maxLines="2"
+        android:ellipsize="end"
         app:layout_constraintStart_toStartOf="@id/tv_price"
         app:layout_constraintTop_toBottomOf="@id/tv_price"
         tools:text="Product Name" />

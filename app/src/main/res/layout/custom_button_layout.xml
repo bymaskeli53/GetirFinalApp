@@ -1,12 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- custom_button_layout.xml -->
+<?xml version="1.0" encoding="utf-8"?><!-- custom_button_layout.xml -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:gravity="center"
     android:background="@drawable/rounded_corner_background"
-
+    android:gravity="center"
     android:orientation="horizontal">
 
     <ImageView
@@ -16,14 +14,13 @@
         android:src="@drawable/icon_go_to_basket" />
 
 
-
     <TextView
-
-        android:textColor="@color/text_primary"
-        android:gravity="center"
         android:id="@+id/tv_totalPrice"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:background="@color/bg_primary_subtle"
-        android:text="Button Text" />
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="Button Text"
+        android:textColor="@color/text_primary" />
 </LinearLayout>

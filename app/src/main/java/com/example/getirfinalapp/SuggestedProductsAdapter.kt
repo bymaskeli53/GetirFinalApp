@@ -13,7 +13,7 @@ class SuggestedProductsAdapter(
         with(holder.binding) {
             tvPrice.text = item.priceText
             tvProductName.text = item.category
-            ivCard.load(item.imageURL) {
+            ivCard.load(item.squareThumbnailURL ?: item.imageURL) {
                 placeholder(R.drawable.basket)
                 crossfade(true)
                 transformations(CircleCropTransformation())

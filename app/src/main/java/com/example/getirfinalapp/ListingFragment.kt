@@ -1,7 +1,6 @@
 package com.example.getirfinalapp
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,16 +47,14 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
         toolbar?.findViewById<TextView>(R.id.tv_toolbar_title)?.text = "Ürünler"
 
 
-//        toolbar?.findViewById<LinearLayout>(R.id.toolbar_basket)
-//            ?.findViewById<TextView>(R.id.tv_totalPrice)?.text =
-//            precisedTotalPrice.toString()
+
 
 
         toolbar?.findViewById<LinearLayout>(R.id.toolbar_basket)?.setOnClickListener {
             val action = ListingFragmentDirections.actionListingFragmentToBasketFragment()
             findNavController().navigate(action)
 
-            // TODO: Toolbar kontrolleri eklenecek
+
         }
 
         viewModel.fetchData()
@@ -79,7 +76,7 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.products.collect { resource ->
                     when (resource) {
-                        is Resource.Success -> {
+                        is ApiResult.Success -> {
                             val data = resource.data
                             // Recycler View veri gösterilecek.
                             if (data != null) {
@@ -102,11 +99,11 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
 
                         }
 
-                        is Resource.Error -> {
+                        is ApiResult.Error -> {
                             val errorMessage = resource.message
                         }
 
-                        is Resource.Loading -> {
+                        is ApiResult.Loading -> {
                             print("Hi")
                         }
                     }
@@ -122,10 +119,10 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.suggestedProducts.collect { resource ->
                     when (resource) {
-                        is Resource.Success -> {
+                        is ApiResult.Success -> {
                             val data = resource.data
                             if (data != null) {
-                                Log.v("Muhammet", data.size.toString())
+
 //                                val suggestedProductsAdapter =
 //                                    SuggestedProductsAdapter(
 //                                        this@ListingFragment,
@@ -168,12 +165,12 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
                             }
                         }
 
-                        is Resource.Error -> {
+                        is ApiResult.Error -> {
                             val errorMessage = resource.message
                         }
 
-                        is Resource.Loading -> {
-                            // Handle loading state if needed
+                        is ApiResult.Loading -> {
+                            
                         }
                     }
                 }

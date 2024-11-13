@@ -64,7 +64,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         binding.tvPrice.text = args.Product.priceText
 
 
-        binding.ivProduct.load(args.Product.imageURL){
+        binding.ivProduct.load(args.Product.imageURL ?: args.Product.squareThumbnailURL){
             placeholder(R.drawable.basket)
             crossfade(true)
             transformations(CircleCropTransformation())
