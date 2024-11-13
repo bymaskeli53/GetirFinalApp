@@ -8,29 +8,36 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
-class GetirViewModel @Inject constructor(val repository: GetirRepository,val productDao: ProductDao) : ViewModel() {
-
-
+class GetirViewModel @Inject constructor(
+    val repository: GetirRepository,
+    val productDao: ProductDao
+) : ViewModel() {
 
 
     private val _products = MutableStateFlow<ApiResult<List<ProductModelItem>>>(ApiResult.Loading())
     val products: StateFlow<ApiResult<List<ProductModelItem>>> = _products
 
-    private val _quantity = MutableLiveData<Int>( 0)
-    val quantity: LiveData<Int> get() =  _quantity
+    private val _quantity = MutableLiveData<Int>(0)
+    val quantity: LiveData<Int> get() = _quantity
 
-    private val _totalPrice = MutableLiveData<Double>( 0.0)
-    val totalPrice: LiveData<Double> get() =  _totalPrice
+    private val _totalPrice = MutableLiveData<Double>(0.0)
+    val totalPrice: LiveData<Double> get() = _totalPrice
 
     private val _productsInBasket = MutableLiveData<List<ProductXX>>()
-    val productsInBasket: LiveData<List<ProductXX>> get() =  _productsInBasket
+    val productsInBasket: LiveData<List<ProductXX>> get() = _productsInBasket
+
+    private val _formattedTotalPrice = MutableLiveData<String>()
+    val formattedTotalPrice: LiveData<String> get() = _formattedTotalPrice
 
 
-
-    private val _suggestedProducts = MutableStateFlow<ApiResult<List<ProductItem>>>(ApiResult.Loading())
+    private val _suggestedProducts =
+        MutableStateFlow<ApiResult<List<ProductItem>>>(ApiResult.Loading())
     val suggestedProducts: StateFlow<ApiResult<List<ProductItem>>> = _suggestedProducts
 
     fun fetchData() {
@@ -63,13 +70,52 @@ class GetirViewModel @Inject constructor(val repository: GetirRepository,val pro
         }
 
         getProductsFromLocal()
+
+
+
         _quantity.value = _quantity.value!! + 1
 //        productX.quantity = productX.quantity?.plus(1)!!
 
+
         // _totalPrice.value = _totalPrice.value?.plus(productX.price?.times(quantity.value?.toDouble()!!)!!)
+
+
+
         _totalPrice.value = productX.price?.let { _totalPrice.value?.plus(it) }
 
+//        val symbols = DecimalFormatSymbols(Locale("tr", "TR")).apply {
+//            decimalSeparator = ','
+//            groupingSeparator = '.'
+//        }
 
+
+//        _totalPrice.value = productX.price?.let {
+//            val newTotal = _totalPrice.value?.plus(it)
+//            // Özel formatlama
+//            val decimalFormat = DecimalFormat("#0.00", symbols)
+//            decimalFormat.format(newTotal).toDouble()
+//        }
+
+//        val symbols = DecimalFormatSymbols(Locale.US).apply {
+//            decimalSeparator = '.'
+//            groupingSeparator = ','
+//        }
+//
+//        val decimalFormat = DecimalFormat("#,##0.00", symbols)
+
+//        _totalPrice.value = productX.price?.let {
+//            val newTotal = _totalPrice.value?.plus(it)
+//            // Özel formatlama
+//
+//            decimalFormat.format(newTotal).replace(',', '.').toDouble()
+//        }
+
+//        _totalPrice.value = productX.price?.let {
+//            val newTotal = _totalPrice.value?.plus(it)
+//            // Değeri iki ondalık hane ile formatla
+//            val formattedTotal = DecimalFormat("#.00").format(newTotal)
+//            formattedTotal.toDouble()
+//        }
 
     }
 
@@ -93,7 +139,7 @@ class GetirViewModel @Inject constructor(val repository: GetirRepository,val pro
 
     fun updateProductToLocal(productX: ProductX) {
         viewModelScope.launch {
-          //  productDao.updateProduct(productX)
+            //  productDao.updateProduct(productX)
             //productDao.updateProduct(productX.copy(quantity = quantity.value))
             productDao.updateProduct(productX)
 
@@ -110,7 +156,6 @@ class GetirViewModel @Inject constructor(val repository: GetirRepository,val pro
     fun getProductsFromLocal() {
         viewModelScope.launch {
             _productsInBasket.value = productDao.getProducts()
-
 
 
         }
