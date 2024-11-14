@@ -3,6 +3,7 @@ package com.example.getirfinalapp
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -154,9 +155,11 @@ class GetirViewModel @Inject constructor(
     }
 
     fun getProductsFromLocal() {
-        viewModelScope.launch {
-            _productsInBasket.value = productDao.getProducts()
 
+        viewModelScope.launch {
+            productDao.getProducts().collect{
+                _productsInBasket.value = it
+            }
 
         }
 

@@ -77,7 +77,7 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
                 .setTitle("Sepeti boşaltmak istiyor musunuz?")
                 .setNegativeButton("Evet") { dialog, view ->
                     viewModel.deleteProductsFromLocal()
-                    viewModel.getProductsFromLocal()
+                   // viewModel.getProductsFromLocal()
 
                     dialog.dismiss()
                 }

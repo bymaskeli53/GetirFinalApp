@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ProductDao {
@@ -17,7 +18,7 @@ interface ProductDao {
     suspend fun insertProduct(productX: ProductXX): Long
 
     @Query("SELECT * FROM PRODUCT")
-    suspend fun getProducts(): List<ProductXX>
+    fun getProducts(): Flow<List<ProductXX>>
 
 
     @Query("SELECT * FROM PRODUCT WHERE id = :id LIMIT 1")
