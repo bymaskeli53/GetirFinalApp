@@ -42,9 +42,9 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
         val toolbarBinding = HomeToolbarBinding.bind(requireActivity().findViewById(R.id.myToolbar))
         toolbarBinding.tvToolbarTitle.text = "Sepetim"
 
-        toolbarBinding.ivDelete.visibility = View.VISIBLE
-        toolbarBinding.toolbarBasket.root.visibility = View.GONE
-        toolbarBinding.ivCancel.visibility = View.VISIBLE
+        toolbarBinding.ivDelete.show()
+        toolbarBinding.toolbarBasket.root.hide()
+        toolbarBinding.ivCancel.show()
 
         toolbarBinding.ivCancel.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
@@ -92,5 +92,4 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
         textView.paintFlags = textView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
 
     }
-
 }
