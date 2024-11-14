@@ -1,5 +1,6 @@
 package com.example.getirfinalapp
 
+import android.graphics.Paint
 import coil.load
 import coil.transform.CircleCropTransformation
 
@@ -12,6 +13,8 @@ class SuggestedProductsAdapter(
     override fun onBindItem(holder: BaseProductsViewHolder, item: ProductX, position: Int) {
         with(holder.binding) {
             tvPrice.text = item.priceText
+            tvProductName.paintFlags = tvProductName.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            // TODO: Bunun gibi sepetteki textin üstü kapatılacak. 
             tvProductName.text = item.category
             ivCard.load(item.squareThumbnailURL ?: item.imageURL) {
                 placeholder(R.drawable.basket)

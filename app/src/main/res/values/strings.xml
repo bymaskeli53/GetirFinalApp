@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">GetirFinalApp</string>
+    <string name="finish_order">Siparişi tamamla</string>
 </resources>

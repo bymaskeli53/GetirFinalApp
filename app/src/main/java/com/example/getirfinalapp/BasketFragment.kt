@@ -1,5 +1,6 @@
 package com.example.getirfinalapp
 
+import android.graphics.Paint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -41,80 +42,54 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
         val toolbarBinding = HomeToolbarBinding.bind(requireActivity().findViewById(R.id.myToolbar))
         toolbarBinding.tvToolbarTitle.text = "Sepetim"
 
-//        val toolbarText = toolbar?.findViewById<TextView>(R.id.tv_toolbar_title)
-//        toolbarText?.text = "Sepetim"
-
-       // toolbar?.findViewById<ImageView>(R.id.iv_delete)?.visibility = View.VISIBLE
         toolbarBinding.ivDelete.visibility = View.VISIBLE
-
-      // toolbar?.findViewById<LinearLayout>(R.id.toolbar_basket)?.visibility = View.GONE
         toolbarBinding.toolbarBasket.root.visibility = View.GONE
-
-       // toolbar?.findViewById<ImageView>(R.id.iv_cancel)?.visibility = View.VISIBLE
         toolbarBinding.ivCancel.visibility = View.VISIBLE
-
-//        toolbar?.findViewById<ImageView>(R.id.iv_cancel)?.setOnClickListener {
-//            requireActivity().supportFragmentManager.popBackStack()
-//        }
 
         toolbarBinding.ivCancel.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
         }
 
-
-
         viewModel.getProductsFromLocal()
-        // viewModel.deleteProductsFromLocal()
+
 
         viewModel.productsInBasket.observe(viewLifecycleOwner, {
-            val adapter = BasketAdapter(it)
-            binding.rvBasket.layoutManager = LinearLayoutManager(requireContext())
-            binding.rvBasket.adapter = adapter
+            createBasketAdapter(it)
         })
 
 
-
         toolbar?.findViewById<ImageView>(R.id.iv_delete)?.setOnClickListener {
-            if (viewModel.productsInBasket.value?.size != 0) {
-                val dialog = AlertDialog.Builder(requireContext())
-                    .setTitle("Sepeti boşaltmak istiyor musunuz?")
-                    .setNegativeButton("Evet") { dialog, view ->
-                        viewModel.deleteProductsFromLocal()
-                        viewModel.getProductsFromLocal()
-
-                        dialog.dismiss()
-                    }
-                    .setPositiveButton("Hayır") { dialog, _ ->
-                        dialog.dismiss()
-                    }.create()
-                dialog.show()
-            }
-
-
-//            viewModel.deleteProductsFromLocal()
-//            viewModel.getProductsFromLocal()
-
-
+            createClearBasketDialog()
         }
 
-        // TODO: Quantity manuel olarak eklenecek.
+        makeStrikeThroughText(binding.tvDiscountPrice)
+    }
 
+    private fun createBasketAdapter(products: List<ProductXX>) {
+        val adapter = BasketAdapter(products)
+        binding.rvBasket.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvBasket.adapter = adapter
+    }
 
-//        val list = mutableListOf("Hi","Hello")
-//        val adapter = BasketAdapter(list)
-//        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-//        binding.recyclerView.adapter = adapter
-//
-//
-//        binding.button.setOnClickListener {
-//            for (i in list.indices) {
-//                list.removeAt(i)
-//                adapter.notifyItemRemoved(i)
-//
-//            }
-//
-//        }
+    private fun createClearBasketDialog() {
+        if (viewModel.productsInBasket.value?.size != 0) {
+            val dialog = AlertDialog.Builder(requireContext())
+                .setTitle("Sepeti boşaltmak istiyor musunuz?")
+                .setNegativeButton("Evet") { dialog, view ->
+                    viewModel.deleteProductsFromLocal()
+                    viewModel.getProductsFromLocal()
 
+                    dialog.dismiss()
+                }
+                .setPositiveButton("Hayır") { dialog, _ ->
+                    dialog.dismiss()
+                }.create()
+            dialog.show()
+        }
+    }
+
+    private fun makeStrikeThroughText(textView: TextView) {
+        textView.paintFlags = textView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
 
     }
 
