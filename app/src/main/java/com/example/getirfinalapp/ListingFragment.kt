@@ -69,7 +69,7 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
             val precisedTotalPrice =
                 Math.round(viewModel.totalPrice.value?.times(1000.0) ?: 1.0) / 1000.0
             toolbar?.findViewById<LinearLayout>(R.id.toolbar_basket)
-                ?.findViewById<TextView>(R.id.tv_totalPrice)?.text = precisedTotalPrice.toString()
+                ?.findViewById<TextView>(R.id.tv_totalPrice)?.text = PriceFormatter.formatPriceAlt(precisedTotalPrice)
         })
 
         viewLifecycleOwner.lifecycleScope.launch {
