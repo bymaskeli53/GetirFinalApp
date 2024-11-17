@@ -6,6 +6,8 @@ import android.animation.TimeInterpolator
 import android.animation.TypeEvaluator
 import android.animation.ValueAnimator
 import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.BounceInterpolator
+import android.view.animation.DecelerateInterpolator
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 
@@ -28,8 +30,8 @@ object PriceAnimationHelper {
         textView: TextView,
         startPrice: Double,
         endPrice: Double,
-        duration: Long = 1000,
-        interpolator: TimeInterpolator = AccelerateDecelerateInterpolator()
+        duration: Long = 500,
+        interpolator: TimeInterpolator = BounceInterpolator()
     ) {
         val animator = ValueAnimator.ofObject(
             TypeEvaluator<Double> { fraction, startValue, endValue ->
@@ -60,4 +62,18 @@ object PriceAnimationHelper {
 
         animator.start()
     }
+}
+
+fun TextView.animatePrice(newPrice: Double) {
+    val oldPrice = try {
+        PriceFormatter.parsePrice(this.text.toString())
+    } catch (e: Exception) {
+        0.0
+    }
+
+    PriceAnimationHelper.animatePrice(
+        textView = this,
+        startPrice = oldPrice,
+        endPrice = newPrice
+    )
 }
