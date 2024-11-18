@@ -76,8 +76,12 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
             val dialog = AlertDialog.Builder(requireContext())
                 .setTitle("Sepeti boşaltmak istiyor musunuz?")
                 .setNegativeButton("Evet") { dialog, view ->
-                    viewModel.deleteProductsFromLocal()
-                   // viewModel.getProductsFromLocal()
+                    viewModel.clearBasket()
+
+                    (requireActivity() as? MainActivity)?.updateToolbarPrice(0.0)
+
+
+                    // viewModel.getProductsFromLocal()
 
                     dialog.dismiss()
                 }

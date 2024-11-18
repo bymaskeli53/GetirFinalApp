@@ -2,6 +2,7 @@ package com.example.getirfinalapp
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
@@ -28,5 +29,16 @@ class MainActivity : AppCompatActivity() {
 
         window.statusBarColor = ContextCompat.getColor(this, R.color.bg_primary)
         setSupportActionBar(findViewById(R.id.my_toolbar))
+    }
+
+    fun updateToolbarPrice(price: Double) {
+        findViewById<TextView>(R.id.tv_totalPrice)?.let { textView ->
+            PriceAnimationHelper.animatePrice(
+                textView = textView,
+                startPrice = PriceFormatter.parsePrice(textView.text.toString()),
+                endPrice = price,
+                duration = 500
+            )
+        }
     }
 }

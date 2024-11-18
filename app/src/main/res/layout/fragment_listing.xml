@@ -1,9 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
+    <!-- Shimmer for the First RecyclerView -->
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_suggested"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        app:shimmer_auto_start="true"
+        app:shimmer_duration="1500"
+        >
+        
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+
+
+        <include
+            layout="@layout/shimmer_item_card" />
+        <include
+            layout="@layout/shimmer_item_card" />
+        <include
+            layout="@layout/shimmer_item_card" />
+        <include
+            layout="@layout/shimmer_item_card" />
+
+        </LinearLayout>
+    </com.facebook.shimmer.ShimmerFrameLayout>
 
     <!-- First RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
@@ -14,7 +46,43 @@
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
         android:clipToPadding="false"
-        android:background="@android:color/transparent"/>
+        android:visibility="gone"
+        android:background="@android:color/transparent" />
+
+    <!-- Shimmer for the Second RecyclerView -->
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_products"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        app:shimmer_auto_start="true"
+        app:shimmer_duration="1500"
+        >
+
+        <GridLayout
+            android:rowCount="2"
+            android:columnCount="3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <include
+            layout="@layout/shimmer_item_card" />
+
+            <include
+                layout="@layout/shimmer_item_card" />
+
+            <include
+                layout="@layout/shimmer_item_card" />
+
+            <include
+                layout="@layout/shimmer_item_card" />
+
+
+        </GridLayout>
+    </com.facebook.shimmer.ShimmerFrameLayout>
 
     <!-- Second RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
@@ -25,7 +93,7 @@
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
         android:clipToPadding="false"
-        android:layout_marginTop="64dp"
-        android:background="@android:color/transparent"/>
+        android:visibility="gone"
+        android:background="@android:color/transparent" />
 
 </LinearLayout>

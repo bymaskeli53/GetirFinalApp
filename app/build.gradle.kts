@@ -100,6 +100,9 @@ dependencies {
 
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.7")
 
+    // Shimmer
+    implementation("com.facebook.shimmer:shimmer:0.5.0")
+
 
 }
 kapt {

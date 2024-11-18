@@ -74,7 +74,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
     private fun setupToolbar() {
         val toolbar = activity?.findViewById<Toolbar>(R.id.myToolbar)
-        toolbar?.findViewById<LinearLayout>(R.id.toolbar_basket)?.visibility = View.INVISIBLE
-        toolbar?.findViewById<ImageView>(R.id.iv_cancel)?.visibility = View.VISIBLE
+        toolbar?.findViewById<LinearLayout>(R.id.toolbar_basket)?.invisible()
+        toolbar?.findViewById<ImageView>(R.id.iv_cancel)?.show()
     }
 }

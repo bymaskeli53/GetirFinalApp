@@ -14,7 +14,7 @@ class SuggestedProductsAdapter(
         with(holder.binding) {
             tvPrice.text = item.priceText
             tvProductName.paintFlags = tvProductName.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-            // TODO: Bunun gibi sepetteki textin üstü kapatılacak. 
+
             tvProductName.text = item.category
             ivCard.load(item.squareThumbnailURL ?: item.imageURL) {
                 placeholder(R.drawable.basket)

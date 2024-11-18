@@ -10,4 +10,7 @@
 
     <color name="price_normal">#000000</color>
     <color name="price_updating">#4CAF50</color>
+
+
+    <color name="colorGrey">#dddddd</color>
 </resources>

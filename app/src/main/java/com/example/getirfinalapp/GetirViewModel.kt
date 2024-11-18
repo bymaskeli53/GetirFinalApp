@@ -172,4 +172,11 @@ class GetirViewModel @Inject constructor(
 
         }
     }
+
+    fun clearBasket() {
+        viewModelScope.launch {
+            deleteProductsFromLocal() // Mevcut fonksiyonunuz
+            _totalPrice.value = 0.0  // Total price'ı sıfırla
+        }
+    }
 }

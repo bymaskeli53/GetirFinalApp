@@ -41,9 +41,9 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
         super.onViewCreated(view, savedInstanceState)
 
         val toolbar = activity?.findViewById<Toolbar>(R.id.myToolbar)
-        toolbar?.findViewById<ImageView>(R.id.iv_cancel)?.visibility = View.INVISIBLE
-        toolbar?.findViewById<LinearLayout>(R.id.toolbar_basket)?.visibility = View.VISIBLE
-        toolbar?.findViewById<ImageView>(R.id.iv_delete)?.visibility = View.INVISIBLE
+        toolbar?.findViewById<ImageView>(R.id.iv_cancel)?.invisible()
+        toolbar?.findViewById<LinearLayout>(R.id.toolbar_basket)?.show()
+        toolbar?.findViewById<ImageView>(R.id.iv_delete)?.invisible()
         toolbar?.findViewById<TextView>(R.id.tv_toolbar_title)?.text = "Ürünler"
 
 
@@ -77,6 +77,10 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
                 viewModel.products.collect { resource ->
                     when (resource) {
                         is ApiResult.Success -> {
+                            binding.shimmerProducts.stopShimmer()
+                            binding.shimmerProducts.hide()
+                            binding.rvProducts.show()
+
                             val data = resource.data
                             // Recycler View veri gösterilecek.
                             if (data != null) {
@@ -104,7 +108,8 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
                         }
 
                         is ApiResult.Loading -> {
-                            print("Hi")
+                            binding.shimmerProducts.startShimmer()
+                            binding.rvProducts.invisible()
                         }
                     }
 
@@ -123,19 +128,7 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
                             val data = resource.data
                             if (data != null) {
 
-//                                val suggestedProductsAdapter =
-//                                    SuggestedProductsAdapter(
-//                                        this@ListingFragment,
-//                                        data!!,
-//                                        { position ->
-//                                            val action =
-//                                                ListingFragmentDirections.actionListingFragmentToDetailFragment(
-//                                                    resource.data[0].products[position]
-//                                                )
-//                                            findNavController().navigate(action)
-//
-//
-//                                        })
+
 
                                 val suggestedProductsAdapter =
                                     SuggestedProductsAdapter(listener = object :
@@ -152,6 +145,9 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
                                             )
                                         findNavController().navigate(action)
                                     })
+                                binding.shimmerSuggested.stopShimmer()
+                                binding.shimmerSuggested.hide()
+                                binding.rvSuggested.show()
                                 binding.rvSuggested.adapter = suggestedProductsAdapter
                                 binding.rvSuggested.layoutManager = LinearLayoutManager(
                                     context,
@@ -166,32 +162,17 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
                         }
 
                         is ApiResult.Error -> {
-                            val errorMessage = resource.message
+
                         }
 
                         is ApiResult.Loading -> {
-                            
+                            binding.shimmerSuggested.startShimmer()
+                            binding.rvSuggested.invisible()
+
                         }
                     }
                 }
             }
-
         }
-
-
     }
-
-//    override fun onAddItemClick(product: ProductX) {
-//        viewModel.increaseQuantity(product)
-//        viewModel.insertProductToLocal(product)
-//        viewModel.updateProductToLocal(product)
-//    }
-//
-//    override fun onAddItemClick(product: ProductXX) {
-//        viewModel.increaseQuantity(product)
-//        viewModel.insertProductToLocal(product)
-//        viewModel.updateProductToLocal(product)
-//    }
-
-
 }
