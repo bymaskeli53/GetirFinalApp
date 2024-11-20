@@ -2,12 +2,13 @@ package com.example.getirfinalapp.di
 
 import android.content.Context
 import androidx.room.Room
+import com.example.getirfinalapp.ProductsRepository
 import com.example.getirfinalapp.network.BASE_URL
 import com.example.getirfinalapp.network.GetirApiService
-import com.example.getirfinalapp.data.repository.GetirRepository
 import com.example.getirfinalapp.data.RemoteDataSource
 import com.example.getirfinalapp.data.database.ProductDao
 import com.example.getirfinalapp.data.database.ProductDatabase
+import com.example.getirfinalapp.data.repository.ProductsRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -47,8 +48,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideRepository(remoteDataSource: RemoteDataSource): GetirRepository {
-        return GetirRepository(remoteDataSource)
+    fun provideRepository(remoteDataSource: RemoteDataSource): ProductsRepository {
+        return ProductsRepositoryImpl(remoteDataSource)
     }
 
     @Provides
@@ -62,6 +63,6 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideProductDao(db: ProductDatabase) : ProductDao = db.getDao()
+    fun provideProductDao(db: ProductDatabase): ProductDao = db.getDao()
 
 }

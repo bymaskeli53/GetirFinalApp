@@ -1,20 +1,20 @@
 package com.example.getirfinalapp.data.repository
 
+import com.example.getirfinalapp.ProductsRepository
 import com.example.getirfinalapp.data.RemoteDataSource
 import com.example.getirfinalapp.data.model.ProductItem
 import com.example.getirfinalapp.data.model.ProductModelItem
 import javax.inject.Inject
 
-class GetirRepository @Inject constructor(val remoteDataSource: RemoteDataSource) {
+class ProductsRepositoryImpl @Inject constructor(val remoteDataSource: RemoteDataSource) :
+    ProductsRepository {
 
-    suspend fun fetchData(): List<ProductModelItem> {
+    override suspend fun fetchProductList(): List<ProductModelItem> {
         return remoteDataSource.fetchProducts()
     }
 
-    suspend fun fetchSuggestedData(): List<ProductItem> {
+    override suspend fun fetchSuggestedProductList(): List<ProductItem> {
         return remoteDataSource.fetchSuggestedProducts()
     }
-
-
 
 }

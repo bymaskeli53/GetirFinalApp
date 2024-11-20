@@ -1,4 +1,4 @@
-package com.example.getirfinalapp.ui
+package com.example.getirfinalapp.ui.fragment
 
 import android.os.Bundle
 import android.transition.TransitionInflater

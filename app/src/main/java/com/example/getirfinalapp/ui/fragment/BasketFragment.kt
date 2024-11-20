@@ -1,4 +1,4 @@
-package com.example.getirfinalapp.ui
+package com.example.getirfinalapp.ui.fragment
 
 import android.graphics.Paint
 import android.os.Bundle
@@ -18,6 +18,8 @@ import com.example.getirfinalapp.util.autoCleared
 import com.example.getirfinalapp.data.model.ProductXX
 import com.example.getirfinalapp.databinding.FragmentBasketBinding
 import com.example.getirfinalapp.databinding.HomeToolbarBinding
+import com.example.getirfinalapp.ui.viewmodel.BasketViewModel
+import com.example.getirfinalapp.ui.activity.MainActivity
 import com.example.getirfinalapp.util.hide
 import com.example.getirfinalapp.util.show
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,7 +30,7 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
 
     private var binding: FragmentBasketBinding by autoCleared()
 
-    private val viewModel: GetirViewModel by viewModels()
+    private val viewModel: BasketViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/listingFragment"
-        android:name="com.example.getirfinalapp.ui.ListingFragment"
+        android:name="com.example.getirfinalapp.ui.fragment.ListingFragment"
         android:label="ListingFragment" >
         <action
             android:id="@+id/action_listingFragment_to_detailFragment"
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.example.getirfinalapp.ui.DetailFragment"
+        android:name="com.example.getirfinalapp.ui.fragment.DetailFragment"
         android:label="DetailFragment" >
         <argument
             android:name="Product"
@@ -27,6 +27,6 @@
     </fragment>
     <fragment
         android:id="@+id/basketFragment"
-        android:name="com.example.getirfinalapp.ui.BasketFragment"
+        android:name="com.example.getirfinalapp.ui.fragment.BasketFragment"
         android:label="BasketFragment" />
 </navigation>

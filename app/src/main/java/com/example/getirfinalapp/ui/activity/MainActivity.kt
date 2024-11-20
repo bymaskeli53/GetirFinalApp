@@ -1,4 +1,4 @@
-package com.example.getirfinalapp.ui
+package com.example.getirfinalapp.ui.activity
 
 import android.os.Bundle
 import android.widget.TextView

@@ -1,31 +1,22 @@
-package com.example.getirfinalapp.ui
+package com.example.getirfinalapp.ui.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.getirfinalapp.ProductsRepository
 import com.example.getirfinalapp.data.database.ProductDao
-import com.example.getirfinalapp.data.repository.GetirRepository
-import com.example.getirfinalapp.data.model.ProductItem
-import com.example.getirfinalapp.data.model.ProductModelItem
 import com.example.getirfinalapp.data.model.ProductX
 import com.example.getirfinalapp.data.model.ProductXX
-import com.example.getirfinalapp.network.ApiResult
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class GetirViewModel @Inject constructor(
-    val repository: GetirRepository,
+class BasketViewModel @Inject constructor(
+    val repository: ProductsRepository,
     val productDao: ProductDao
 ) : ViewModel() {
-
-
-    private val _products = MutableStateFlow<ApiResult<List<ProductModelItem>>>(ApiResult.Loading())
-    val products: StateFlow<ApiResult<List<ProductModelItem>>> = _products
 
     private val _quantity = MutableLiveData<Int>(0)
     val quantity: LiveData<Int> get() = _quantity
@@ -39,36 +30,6 @@ class GetirViewModel @Inject constructor(
     private val _formattedTotalPrice = MutableLiveData<String>()
     val formattedTotalPrice: LiveData<String> get() = _formattedTotalPrice
 
-
-    private val _suggestedProducts =
-        MutableStateFlow<ApiResult<List<ProductItem>>>(ApiResult.Loading())
-    val suggestedProducts: StateFlow<ApiResult<List<ProductItem>>> = _suggestedProducts
-
-    fun fetchProductList() {
-        viewModelScope.launch {
-
-            try {
-                val result = repository.fetchData()
-                _products.emit(ApiResult.Success(result))
-            } catch (e: Exception){
-                _products.emit(ApiResult.Error(e.localizedMessage))
-            }
-
-
-        }
-    }
-
-    fun fetchSuggestedProductList() {
-        viewModelScope.launch {
-
-            try {
-                val result = repository.fetchSuggestedData()
-                _suggestedProducts.emit(ApiResult.Success(result))
-            } catch (e: Exception){
-                _suggestedProducts.emit(ApiResult.Error(message = e.localizedMessage))
-            }
-        }
-    }
 
     fun increaseQuantity(productX: ProductX) {
         viewModelScope.launch {
@@ -126,7 +87,7 @@ class GetirViewModel @Inject constructor(
     fun getProductsFromLocal() {
 
         viewModelScope.launch {
-            productDao.getProducts().collect{
+            productDao.getProducts().collect {
                 _productsInBasket.value = it
             }
 

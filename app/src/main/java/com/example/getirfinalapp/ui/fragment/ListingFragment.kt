@@ -1,4 +1,4 @@
-package com.example.getirfinalapp.ui
+package com.example.getirfinalapp.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -29,6 +28,8 @@ import com.example.getirfinalapp.databinding.FragmentListingBinding
 import com.example.getirfinalapp.util.hide
 import com.example.getirfinalapp.util.invisible
 import com.example.getirfinalapp.network.ApiResult
+import com.example.getirfinalapp.ui.viewmodel.BasketViewModel
+import com.example.getirfinalapp.ui.viewmodel.ProductViewModel
 import com.example.getirfinalapp.util.show
 import com.example.getirfinalapp.util.showToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,7 +40,8 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
 
     private var binding: FragmentListingBinding by autoCleared()
 
-    private val viewModel: GetirViewModel by viewModels()
+    private val viewModel: BasketViewModel by viewModels()
+    private val productViewModel: ProductViewModel by viewModels()
 
     private var toolbar: Toolbar? = null
 
@@ -58,8 +60,8 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
 
         setupToolbar()
 
-        viewModel.fetchProductList()
-        viewModel.fetchSuggestedProductList()
+        productViewModel.fetchProductList()
+        productViewModel.fetchSuggestedProductList()
 
         viewModel.quantity.observe(viewLifecycleOwner, {
             binding.rvSuggested.rootView.findViewById<ImageView>(R.id.iv_plus)
@@ -75,7 +77,7 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.products.collect { resource ->
+                productViewModel.products.collect { resource ->
                     when (resource) {
                         is ApiResult.Success -> {
                             binding.shimmerProducts.stopShimmer()
@@ -118,7 +120,7 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.suggestedProducts.collect { resource ->
+                productViewModel.suggestedProducts.collect { resource ->
                     when (resource) {
                         is ApiResult.Success -> {
                             val data = resource.data
@@ -193,7 +195,7 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
         toolbar?.findViewById<ImageView>(R.id.iv_delete)?.invisible()
         toolbar?.findViewById<TextView>(R.id.tv_toolbar_title)?.text = "Ürünler"
         toolbar?.findViewById<LinearLayout>(R.id.toolbar_basket)?.setOnClickListener {
-            val action = ListingFragmentDirections.actionListingFragmentToBasketFragment()
+            val action = ListingFragmentDirections.Companion.actionListingFragmentToBasketFragment()
             findNavController().navigate(action)
         }
     }

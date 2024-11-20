@@ -5,12 +5,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.getirfinalapp.databinding.ItemCardBinding
 
-abstract class BaseProductsAdapter<T>(private val listener: AddItemClickListener<T>, private val items: List<T>) :
+abstract class BaseProductsAdapter<T>(
+    private val listener: AddItemClickListener<T>,
+    private val items: List<T>
+) :
     RecyclerView.Adapter<BaseProductsAdapter<T>.BaseProductsViewHolder>() {
+
 
     abstract fun onBindItem(holder: BaseProductsViewHolder, item: T, position: Int)
 
-    inner class BaseProductsViewHolder(val binding: ItemCardBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class BaseProductsViewHolder(val binding: ItemCardBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(item: T) {
             onBindItem(this, item, adapterPosition)
         }
