@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -112,6 +113,9 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
                             binding.shimmerProducts.startShimmer()
                             binding.rvProducts.invisible()
                         }
+
+                        ApiResult.NetworkError -> showToast(message = "No Internet Connection")
+                        ApiResult.UnknownError -> showToast(message = "An unkown error occured.")
                     }
 
                 }
@@ -120,10 +124,10 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                productViewModel.suggestedProducts.collect { resource ->
-                    when (resource) {
+                productViewModel.suggestedProducts.collect { apiResult ->
+                    when (apiResult) {
                         is ApiResult.Success -> {
-                            val data = resource.data
+                            val data = apiResult.data
                             if (data != null) {
                                 val suggestedProductsAdapterItem =
                                     SuggestedProductsAdapter(listener = object :
@@ -136,7 +140,7 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
                                     }, items = data!![0].products, onItemClick = { position ->
                                         val action =
                                             ListingFragmentDirections.Companion.actionListingFragmentToDetailFragment(
-                                                resource.data[0].products[position]
+                                                apiResult.data[0].products[position]
                                             )
                                         findNavController().navigate(action)
                                     })
@@ -158,7 +162,7 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
                         }
 
                         is ApiResult.Error -> {
-                            showToast(resource.message)
+                            showToast(apiResult.message)
                         }
 
                         is ApiResult.Loading -> {
@@ -166,6 +170,9 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
                             binding.rvSuggested.invisible()
 
                         }
+
+                        ApiResult.NetworkError -> showToast(message = "No Internet Connection")
+                        ApiResult.UnknownError -> showToast(message = "An unknown error occured")
                     }
                 }
             }

@@ -6,6 +6,7 @@ import com.example.getirfinalapp.ProductsRepository
 import com.example.getirfinalapp.data.model.ProductItem
 import com.example.getirfinalapp.data.model.ProductModelItem
 import com.example.getirfinalapp.network.ApiResult
+import com.example.getirfinalapp.network.ApiResult.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,24 +26,36 @@ class ProductViewModel @Inject constructor(
 
     fun fetchProductList() {
         viewModelScope.launch {
-            try {
-                val result = repository.fetchProductList()
-                _products.emit(ApiResult.Success(result))
-            } catch (e: Exception) {
-                _products.emit(ApiResult.Error(e.localizedMessage))
+            when (val result = repository.fetchProductList()) {
+                is Success -> {
+                    _products.emit(Success(result.data))
+                }
+
+                is Error -> {
+                    _products.emit(Error(result.message))
+                }
+
+
+                is NetworkError -> _products.emit(NetworkError)
+                is UnknownError -> _products.emit(UnknownError)
+                else -> {}
+            }
+        }
+
+    }
+
+
+    fun fetchSuggestedProductList() {
+        viewModelScope.launch {
+            when (val result = repository.fetchSuggestedProductList()) {
+                is Error -> _suggestedProducts.emit(Error(result.message))
+                is Loading -> {}
+                is NetworkError -> _suggestedProducts.emit(NetworkError)
+                is Success -> _suggestedProducts.emit(Success(result.data))
+                is UnknownError -> _suggestedProducts.emit(UnknownError)
             }
         }
     }
 
-    fun fetchSuggestedProductList() {
-        viewModelScope.launch {
-            try {
-                val result = repository.fetchSuggestedProductList()
-                _suggestedProducts.emit(ApiResult.Success(result))
-            } catch (e: Exception) {
-                _suggestedProducts.emit(ApiResult.Error(e.localizedMessage))
-            }
-        }
-    }
 
 }
