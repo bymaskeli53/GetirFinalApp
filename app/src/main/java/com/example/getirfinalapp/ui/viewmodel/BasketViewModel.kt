@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.getirfinalapp.ProductsRepository
 import com.example.getirfinalapp.data.database.ProductDao
-import com.example.getirfinalapp.data.model.ProductX
-import com.example.getirfinalapp.data.model.ProductXX
+import com.example.getirfinalapp.data.model.SuggestedProductItem
+import com.example.getirfinalapp.data.model.GeneralProductItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,22 +24,22 @@ class BasketViewModel @Inject constructor(
     private val _totalPrice = MutableLiveData<Double>(0.0)
     val totalPrice: LiveData<Double> get() = _totalPrice
 
-    private val _productsInBasket = MutableLiveData<List<ProductXX>>()
-    val productsInBasket: LiveData<List<ProductXX>> get() = _productsInBasket
+    private val _productsInBasket = MutableLiveData<List<GeneralProductItem>>()
+    val productsInBasket: LiveData<List<GeneralProductItem>> get() = _productsInBasket
 
     private val _formattedTotalPrice = MutableLiveData<String>()
     val formattedTotalPrice: LiveData<String> get() = _formattedTotalPrice
 
 
-    fun increaseQuantity(productX: ProductX) {
+    fun increaseQuantity(suggestedProductItem: SuggestedProductItem) {
         viewModelScope.launch {
-            val existingProduct = productDao.getProductById(productX.id)
+            val existingProduct = productDao.getProductById(suggestedProductItem.id)
             if (existingProduct != null) {
                 existingProduct.quantity += 1
                 productDao.updateProduct(existingProduct)
             } else {
-                productX.quantity = 1
-                productDao.insertProduct(productX)
+                suggestedProductItem.quantity = 1
+                productDao.insertProduct(suggestedProductItem)
             }
         }
 
@@ -49,37 +49,37 @@ class BasketViewModel @Inject constructor(
 
         _quantity.value = _quantity.value!! + 1
 
-        _totalPrice.value = productX.price?.let { _totalPrice.value?.plus(it) }
+        _totalPrice.value = suggestedProductItem.price?.let { _totalPrice.value?.plus(it) }
 
     }
 
-    fun increaseQuantity(productX: ProductXX) {
+    fun increaseQuantity(productX: GeneralProductItem) {
         _quantity.value = _quantity.value!! + 1
         _totalPrice.value = productX.price?.let { _totalPrice.value?.plus(it) }
     }
 
-    fun insertProductToLocal(productX: ProductX) {
+    fun insertProductToLocal(suggestedProductItem: SuggestedProductItem) {
         viewModelScope.launch {
-            productDao.insertProduct(productX)
+            productDao.insertProduct(suggestedProductItem)
         }
     }
 
-    fun insertProductToLocal(productXX: ProductXX) {
+    fun insertProductToLocal(generalProductItem: GeneralProductItem) {
         viewModelScope.launch {
-            productDao.insertProduct(productXX)
+            productDao.insertProduct(generalProductItem)
         }
     }
 
-    fun updateProductToLocal(productX: ProductX) {
+    fun updateProductToLocal(suggestedProductItem: SuggestedProductItem) {
         viewModelScope.launch {
-            productDao.updateProduct(productX)
+            productDao.updateProduct(suggestedProductItem)
 
         }
     }
 
-    fun updateProductToLocal(productXX: ProductXX) {
+    fun updateProductToLocal(generalProductItem: GeneralProductItem) {
         viewModelScope.launch {
-            productDao.updateProduct(productXX.copy(quantity = (quantity.value)?.plus(1)))
+            productDao.updateProduct(generalProductItem.copy(quantity = (quantity.value)?.plus(1)))
 
         }
     }

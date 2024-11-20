@@ -3,10 +3,10 @@ package com.example.getirfinalapp.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.getirfinalapp.data.model.ProductXX
+import com.example.getirfinalapp.data.model.GeneralProductItem
 import com.example.getirfinalapp.databinding.ItemBasketBinding
 
-class BasketAdapter(val productsInBasket: List<ProductXX>) : RecyclerView.Adapter<BasketAdapter.BasketViewHolder>() {
+class BasketAdapter(val productsInBasket: List<GeneralProductItem>) : RecyclerView.Adapter<BasketAdapter.BasketViewHolder>() {
 
     inner class BasketViewHolder(val binding: ItemBasketBinding) :
         RecyclerView.ViewHolder(binding.root)

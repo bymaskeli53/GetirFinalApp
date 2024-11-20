@@ -22,8 +22,8 @@ import com.example.getirfinalapp.adapter.ProductsAdapter
 import com.example.getirfinalapp.adapter.SuggestedProductsAdapter
 import com.example.getirfinalapp.util.animatePrice
 import com.example.getirfinalapp.util.autoCleared
-import com.example.getirfinalapp.data.model.ProductX
-import com.example.getirfinalapp.data.model.ProductXX
+import com.example.getirfinalapp.data.model.SuggestedProductItem
+import com.example.getirfinalapp.data.model.GeneralProductItem
 import com.example.getirfinalapp.databinding.FragmentListingBinding
 import com.example.getirfinalapp.util.hide
 import com.example.getirfinalapp.util.invisible
@@ -88,8 +88,8 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
 
                             if (data != null) {
                                 val productsAdapter = ProductsAdapter(listener = object :
-                                    BaseProductsAdapter.AddItemClickListener<ProductXX> {
-                                    override fun onAddItemClick(item: ProductXX) {
+                                    BaseProductsAdapter.AddItemClickListener<GeneralProductItem> {
+                                    override fun onAddItemClick(item: GeneralProductItem) {
                                         viewModel.increaseQuantity(item)
                                         viewModel.insertProductToLocal(item)
                                         viewModel.updateProductToLocal(item)
@@ -125,10 +125,10 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
                         is ApiResult.Success -> {
                             val data = resource.data
                             if (data != null) {
-                                val suggestedProductsAdapter =
+                                val suggestedProductsAdapterItem =
                                     SuggestedProductsAdapter(listener = object :
-                                        BaseProductsAdapter.AddItemClickListener<ProductX> {
-                                        override fun onAddItemClick(item: ProductX) {
+                                        BaseProductsAdapter.AddItemClickListener<SuggestedProductItem> {
+                                        override fun onAddItemClick(item: SuggestedProductItem) {
                                             viewModel.increaseQuantity(item)
                                             viewModel.insertProductToLocal(item)
                                             viewModel.updateProductToLocal(item)
@@ -143,7 +143,7 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
                                 binding.shimmerSuggested.stopShimmer()
                                 binding.shimmerSuggested.hide()
                                 binding.rvSuggested.show()
-                                binding.rvSuggested.adapter = suggestedProductsAdapter
+                                binding.rvSuggested.adapter = suggestedProductsAdapterItem
                                 binding.rvSuggested.layoutManager = LinearLayoutManager(
                                     context,
                                     LinearLayoutManager.HORIZONTAL,

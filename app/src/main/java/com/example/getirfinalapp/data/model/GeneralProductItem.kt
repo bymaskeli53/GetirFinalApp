@@ -6,9 +6,9 @@ import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-@Entity(tableName = "Product")
-data class ProductX(
-    val category: String?,
+@Entity(tableName = "ProductX")
+data class GeneralProductItem(
+    val attribute: String?,
     @PrimaryKey(autoGenerate = false)
     val id: String,
     val imageURL: String?,
@@ -16,8 +16,6 @@ data class ProductX(
     val price: Double?,
     val priceText: String?,
     val shortDescription: String?,
-    val squareThumbnailURL: String?,
-    val status: Int?,
-    val unitPrice: Double?,
-    var quantity: Int = 0
+    val thumbnailURL: String?,
+    val quantity: Int?
 ) : Parcelable

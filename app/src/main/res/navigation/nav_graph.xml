@@ -21,7 +21,7 @@
         android:label="DetailFragment" >
         <argument
             android:name="Product"
-            app:argType="com.example.getirfinalapp.data.model.ProductX"
+            app:argType="com.example.getirfinalapp.data.model.SuggestedProductItem"
             />
 
     </fragment>

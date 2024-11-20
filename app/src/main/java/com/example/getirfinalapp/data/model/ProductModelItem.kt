@@ -6,5 +6,5 @@ data class ProductModelItem(
     val name: String,
     val password: String,
     val productCount: Int,
-    val products: List<ProductXX>
+    val products: List<GeneralProductItem>
 )

@@ -3,16 +3,16 @@ package com.example.getirfinalapp.adapter
 import android.graphics.Paint
 import coil.load
 import coil.transform.CircleCropTransformation
-import com.example.getirfinalapp.data.model.ProductX
+import com.example.getirfinalapp.data.model.SuggestedProductItem
 import com.example.getirfinalapp.R
 
 class SuggestedProductsAdapter(
-    val listener: AddItemClickListener<ProductX>,
-    items: List<ProductX>,
+    val listener: AddItemClickListener<SuggestedProductItem>,
+    items: List<SuggestedProductItem>,
     val onItemClick: (position: Int) -> Unit
-) : BaseProductsAdapter<ProductX>(listener, items) {
+) : BaseProductsAdapter<SuggestedProductItem>(listener, items) {
 
-    override fun onBindItem(holder: BaseProductsViewHolder, item: ProductX, position: Int) {
+    override fun onBindItem(holder: BaseProductsViewHolder, item: SuggestedProductItem, position: Int) {
         with(holder.binding) {
             tvPrice.text = item.priceText
             tvProductName.paintFlags = tvProductName.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
@@ -27,7 +27,6 @@ class SuggestedProductsAdapter(
 
             ivPlus.setOnClickListener {
                 listener.onAddItemClick(item)
-               // notifyItemChanged(position)
             }
         }
 

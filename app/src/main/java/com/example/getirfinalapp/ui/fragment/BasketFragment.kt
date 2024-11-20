@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.getirfinalapp.R
 import com.example.getirfinalapp.adapter.BasketAdapter
 import com.example.getirfinalapp.util.autoCleared
-import com.example.getirfinalapp.data.model.ProductXX
+import com.example.getirfinalapp.data.model.GeneralProductItem
 import com.example.getirfinalapp.databinding.FragmentBasketBinding
 import com.example.getirfinalapp.databinding.HomeToolbarBinding
 import com.example.getirfinalapp.ui.viewmodel.BasketViewModel
@@ -72,7 +72,7 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
         makeStrikeThroughText(binding.tvDiscountPrice)
     }
 
-    private fun createBasketAdapter(products: List<ProductXX>) {
+    private fun createBasketAdapter(products: List<GeneralProductItem>) {
         val adapter = BasketAdapter(products)
         binding.rvBasket.layoutManager = LinearLayoutManager(requireContext())
         binding.rvBasket.adapter = adapter
