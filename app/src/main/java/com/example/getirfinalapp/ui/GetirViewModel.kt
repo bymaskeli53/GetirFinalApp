@@ -44,7 +44,7 @@ class GetirViewModel @Inject constructor(
         MutableStateFlow<ApiResult<List<ProductItem>>>(ApiResult.Loading())
     val suggestedProducts: StateFlow<ApiResult<List<ProductItem>>> = _suggestedProducts
 
-    fun fetchData() {
+    fun fetchProductList() {
         viewModelScope.launch {
 
             try {
@@ -58,7 +58,7 @@ class GetirViewModel @Inject constructor(
         }
     }
 
-    fun fetchSuggestedData() {
+    fun fetchSuggestedProductList() {
         viewModelScope.launch {
 
             try {
@@ -67,8 +67,6 @@ class GetirViewModel @Inject constructor(
             } catch (e: Exception){
                 _suggestedProducts.emit(ApiResult.Error(message = e.localizedMessage))
             }
-
-            //_suggestedProducts.value = Resource.Success(result)
         }
     }
 
@@ -89,54 +87,13 @@ class GetirViewModel @Inject constructor(
 
 
         _quantity.value = _quantity.value!! + 1
-//        productX.quantity = productX.quantity?.plus(1)!!
-
-
-        // _totalPrice.value = _totalPrice.value?.plus(productX.price?.times(quantity.value?.toDouble()!!)!!)
-
-
 
         _totalPrice.value = productX.price?.let { _totalPrice.value?.plus(it) }
-
-//        val symbols = DecimalFormatSymbols(Locale("tr", "TR")).apply {
-//            decimalSeparator = ','
-//            groupingSeparator = '.'
-//        }
-
-
-//        _totalPrice.value = productX.price?.let {
-//            val newTotal = _totalPrice.value?.plus(it)
-//            // Özel formatlama
-//            val decimalFormat = DecimalFormat("#0.00", symbols)
-//            decimalFormat.format(newTotal).toDouble()
-//        }
-
-//        val symbols = DecimalFormatSymbols(Locale.US).apply {
-//            decimalSeparator = '.'
-//            groupingSeparator = ','
-//        }
-//
-//        val decimalFormat = DecimalFormat("#,##0.00", symbols)
-
-//        _totalPrice.value = productX.price?.let {
-//            val newTotal = _totalPrice.value?.plus(it)
-//            // Özel formatlama
-//
-//            decimalFormat.format(newTotal).replace(',', '.').toDouble()
-//        }
-
-//        _totalPrice.value = productX.price?.let {
-//            val newTotal = _totalPrice.value?.plus(it)
-//            // Değeri iki ondalık hane ile formatla
-//            val formattedTotal = DecimalFormat("#.00").format(newTotal)
-//            formattedTotal.toDouble()
-//        }
 
     }
 
     fun increaseQuantity(productX: ProductXX) {
         _quantity.value = _quantity.value!! + 1
-        // _totalPrice.value = _totalPrice.value?.plus(productX.price?.times(quantity.value?.toDouble()!!)!!)
         _totalPrice.value = productX.price?.let { _totalPrice.value?.plus(it) }
     }
 
@@ -154,8 +111,6 @@ class GetirViewModel @Inject constructor(
 
     fun updateProductToLocal(productX: ProductX) {
         viewModelScope.launch {
-            //  productDao.updateProduct(productX)
-            //productDao.updateProduct(productX.copy(quantity = quantity.value))
             productDao.updateProduct(productX)
 
         }
@@ -182,8 +137,6 @@ class GetirViewModel @Inject constructor(
     fun deleteProductsFromLocal() {
         viewModelScope.launch {
             productDao.deleteAllProducts()
-
-
         }
     }
 

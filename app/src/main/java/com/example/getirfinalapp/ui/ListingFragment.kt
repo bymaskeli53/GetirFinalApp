@@ -58,8 +58,8 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
 
         setupToolbar()
 
-        viewModel.fetchData()
-        viewModel.fetchSuggestedData()
+        viewModel.fetchProductList()
+        viewModel.fetchSuggestedProductList()
 
         viewModel.quantity.observe(viewLifecycleOwner, {
             binding.rvSuggested.rootView.findViewById<ImageView>(R.id.iv_plus)
@@ -83,10 +83,8 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
                             binding.rvProducts.show()
 
                             val data = resource.data
-                            // Recycler View veri gösterilecek.
+
                             if (data != null) {
-
-
                                 val productsAdapter = ProductsAdapter(listener = object :
                                     BaseProductsAdapter.AddItemClickListener<ProductXX> {
                                     override fun onAddItemClick(item: ProductXX) {
@@ -115,10 +113,7 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
                     }
 
                 }
-
-
             }
-
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -128,8 +123,6 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
                         is ApiResult.Success -> {
                             val data = resource.data
                             if (data != null) {
-
-
                                 val suggestedProductsAdapter =
                                     SuggestedProductsAdapter(listener = object :
                                         BaseProductsAdapter.AddItemClickListener<ProductX> {
