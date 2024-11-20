@@ -63,7 +63,7 @@
 
         <GridLayout
             android:rowCount="2"
-            android:columnCount="3"
+            android:columnCount="4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -80,6 +80,15 @@
             <include
                 layout="@layout/shimmer_item_card" />
 
+            <include
+                layout="@layout/shimmer_item_card" />
+            <include
+                layout="@layout/shimmer_item_card" />
+
+            <include
+                layout="@layout/shimmer_item_card" />
+            <include
+                layout="@layout/shimmer_item_card" />
 
         </GridLayout>
     </com.facebook.shimmer.ShimmerFrameLayout>
