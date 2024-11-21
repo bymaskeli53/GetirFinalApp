@@ -20,42 +20,35 @@ class ProductViewModel @Inject constructor(
     private val _products = MutableStateFlow<ApiResult<List<ProductModelItem>>>(ApiResult.Loading())
     val products: StateFlow<ApiResult<List<ProductModelItem>>> = _products
 
-    private val _suggestedProducts =
-        MutableStateFlow<ApiResult<List<ProductItem>>>(ApiResult.Loading())
+    private val _suggestedProducts = MutableStateFlow<ApiResult<List<ProductItem>>>(ApiResult.Loading())
     val suggestedProducts: StateFlow<ApiResult<List<ProductItem>>> = _suggestedProducts
 
     fun fetchProductList() {
         viewModelScope.launch {
-            when (val result = repository.fetchProductList()) {
-                is Success -> {
-                    _products.emit(Success(result.data))
-                }
-
-                is Error -> {
-                    _products.emit(Error(result.message))
-                }
-
-
-                is NetworkError -> _products.emit(NetworkError)
-                is UnknownError -> _products.emit(UnknownError)
-                else -> {}
-            }
+            _products.emit(ApiResult.Loading())
+            val result = repository.fetchProductList()
+            handleApiCall(result, _products)
         }
-
     }
-
 
     fun fetchSuggestedProductList() {
         viewModelScope.launch {
-            when (val result = repository.fetchSuggestedProductList()) {
-                is Error -> _suggestedProducts.emit(Error(result.message))
-                is Loading -> {}
-                is NetworkError -> _suggestedProducts.emit(NetworkError)
-                is Success -> _suggestedProducts.emit(Success(result.data))
-                is UnknownError -> _suggestedProducts.emit(UnknownError)
-            }
+            _suggestedProducts.emit(ApiResult.Loading())
+            val result = repository.fetchSuggestedProductList()
+            handleApiCall(result, _suggestedProducts)
         }
     }
 
-
+    private suspend fun <T> handleApiCall(
+        result: ApiResult<T>,
+        stateFlow: MutableStateFlow<ApiResult<T>>
+    ) {
+        when (result) {
+            is Success -> stateFlow.emit(Success(result.data))
+            is Error -> stateFlow.emit(Error(result.message))
+            is NetworkError -> stateFlow.emit(NetworkError)
+            is UnknownError -> stateFlow.emit(UnknownError)
+            else -> {}
+        }
+    }
 }
