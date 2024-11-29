@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FFFFFFFF</color> <!-- Beyaz -->
+    <color name="white">#FF000000</color> <!-- Siyah -->
+    <color name="text_primary">#D1C4FF</color> <!-- Daha açık mor tonu -->
+    <color name="text_dark">#EAEAEA</color> <!-- Daha açık gri tonu -->
+    <color name="text_secondary">#A2A9B8</color> <!-- Daha açık bir mavi-gri -->
+    <color name="bg_primary">#3E287F</color> <!-- Daha koyu bir mor -->
+    <color name="bg_primary_subtle">#1C1B29</color> <!-- Koyu bir arka plan rengi -->
+
+    <color name="price_normal">#FFFFFF</color> <!-- Beyaz -->
+    <color name="price_updating">#81C784</color> <!-- Daha parlak yeşil -->
+
+    <color name="colorGrey">#4A4A4A</color> <!-- Daha koyu bir gri tonu -->
+</resources>
