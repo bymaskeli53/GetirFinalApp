@@ -55,7 +55,8 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             requireActivity().supportFragmentManager.popBackStack()
         }
 
-        toolbar?.findViewById<TextView>(R.id.tv_toolbar_title)?.text = "Ürün Detayı"
+        toolbar?.findViewById<TextView>(R.id.tv_toolbar_title)?.text =
+            getString(R.string.product_detail)
 
         setupToolbar()
 

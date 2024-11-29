@@ -2,16 +2,16 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     kotlin("kapt")
-    id("com.google.dagger.hilt.android")
+    alias(libs.plugins.hilt.plugin)
     id("kotlin-parcelize")
-    id ("androidx.navigation.safeargs.kotlin")
-    id("com.google.devtools.ksp")
+    alias(libs.plugins.androidx.navigation.safe.args)
+    alias(libs.plugins.ksp)
 
 }
 
 android {
     namespace = "com.example.getirfinalapp"
-    compileSdk = 34
+    compileSdk = 35
 
     buildFeatures {
         viewBinding = true
@@ -68,40 +68,39 @@ dependencies {
 
     // navigation
 
-    implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
-    implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
 
-    implementation ("androidx.recyclerview:recyclerview:1.3.2")
+    implementation (libs.androidx.recyclerview)
 
     // retrofit
 
-    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation (libs.retrofit)
+    implementation(libs.converter.gson)
 
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0")
-
-
-    implementation("com.google.dagger:hilt-android:2.48")
-    kapt("com.google.dagger:hilt-android-compiler:2.48")
-
-    implementation("io.coil-kt:coil:2.5.0")
+    implementation(libs.kotlinx.coroutines.android)
 
 
-    // rooom
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
+
+    implementation(libs.coil)
+
+
+    // room
     implementation(kotlin("stdlib-jdk8"))
-    implementation("androidx.room:room-ktx:$room_version")
+    implementation(libs.androidx.room.ktx)
 
-    implementation("androidx.room:room-runtime:$room_version")
+    implementation(libs.androidx.room.runtime)
     annotationProcessor("androidx.room:room-compiler:$room_version")
 
     // lifecycle
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
 
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.7")
+    implementation(libs.androidx.lifecycle.livedata.ktx)
 
     // Shimmer
-    implementation("com.facebook.shimmer:shimmer:0.5.0")
+    implementation(libs.shimmer)
 
 
 }

@@ -47,7 +47,7 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
         val toolbar = activity?.findViewById<Toolbar>(R.id.myToolbar)
 
         val toolbarBinding = HomeToolbarBinding.bind(requireActivity().findViewById(R.id.myToolbar))
-        toolbarBinding.tvToolbarTitle.text = "Sepetim"
+        toolbarBinding.tvToolbarTitle.text = getString(R.string.my_basket)
 
         toolbarBinding.ivDelete.show()
         toolbarBinding.toolbarBasket.root.hide()

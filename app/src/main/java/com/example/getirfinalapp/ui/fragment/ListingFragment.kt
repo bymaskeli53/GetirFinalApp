@@ -114,8 +114,8 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
                             binding.rvProducts.invisible()
                         }
 
-                        ApiResult.NetworkError -> showToast(message = "No Internet Connection")
-                        ApiResult.UnknownError -> showToast(message = "An unkown error occured.")
+                        ApiResult.NetworkError -> showToast(message = getString(R.string.no_internet_connection))
+                        ApiResult.UnknownError -> showToast(message = getString(R.string.an_unkown_error_occured))
                     }
 
                 }
@@ -171,8 +171,8 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
 
                         }
 
-                        ApiResult.NetworkError -> showToast(message = "No Internet Connection")
-                        ApiResult.UnknownError -> showToast(message = "An unknown error occured")
+                        ApiResult.NetworkError -> showToast(message = getString(R.string.no_internet_connection))
+                        ApiResult.UnknownError -> showToast(message = getString(R.string.an_unkown_error_occured))
                     }
                 }
             }
@@ -200,7 +200,7 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
         toolbar?.findViewById<ImageView>(R.id.iv_cancel)?.invisible()
         toolbar?.findViewById<LinearLayout>(R.id.toolbar_basket)?.show()
         toolbar?.findViewById<ImageView>(R.id.iv_delete)?.invisible()
-        toolbar?.findViewById<TextView>(R.id.tv_toolbar_title)?.text = "Ürünler"
+        toolbar?.findViewById<TextView>(R.id.tv_toolbar_title)?.text = getString(R.string.products)
         toolbar?.findViewById<LinearLayout>(R.id.toolbar_basket)?.setOnClickListener {
             val action = ListingFragmentDirections.Companion.actionListingFragmentToBasketFragment()
             findNavController().navigate(action)
