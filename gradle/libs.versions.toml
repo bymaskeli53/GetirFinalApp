@@ -24,6 +24,7 @@ roomKtx = "2.6.1"
 shimmer = "0.5.0"
 ksp = "2.0.20-1.0.24"
 androidxNavigationSafeargsGradlePlugin = "2.8.4"
+detekt = "1.23.5"
 
 
 [libraries]
@@ -49,6 +50,7 @@ androidx-activity = { group = "androidx.activity", name = "activity", version.re
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 shimmer = { module = "com.facebook.shimmer:shimmer", version.ref = "shimmer" }
+detekt = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -56,5 +58,6 @@ jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "k
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 androidx-navigation-safe-args = { id ="androidx.navigation.safeargs.kotlin",version.ref ="androidxNavigationSafeargsGradlePlugin" }
 hilt-plugin = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 
 

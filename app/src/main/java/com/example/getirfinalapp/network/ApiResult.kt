@@ -9,7 +9,6 @@ sealed class ApiResult<out T> {
     data class Error<out T>(val message: String, val data: T? = null) : ApiResult<T>()
     object NetworkError : ApiResult<Nothing>()
     object UnknownError : ApiResult<Nothing>()
-
 }
 
 // Generic API call handler

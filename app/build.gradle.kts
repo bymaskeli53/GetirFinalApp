@@ -6,6 +6,7 @@ plugins {
     id("kotlin-parcelize")
     alias(libs.plugins.androidx.navigation.safe.args)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.detekt)
 
 }
 
@@ -49,7 +50,6 @@ dependencies {
 
     val room_version = "2.6.1"
 
-    val nav_version = "2.7.7"
 
     ksp("androidx.room:room-compiler:$room_version")
 
@@ -102,8 +102,19 @@ dependencies {
     // Shimmer
     implementation(libs.shimmer)
 
+    //detekt
+    detektPlugins(libs.detekt)
+
 
 }
 kapt {
     correctErrorTypes = true
+}
+
+detekt {
+    config.setFrom(file("$rootDir/detekt/detektConfig.yml"))
+    source.from(files("src/main/kotlin", "src/test/kotlin"))
+    parallel = true
+    autoCorrect = true
+    buildUponDefaultConfig = true
 }

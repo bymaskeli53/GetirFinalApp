@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.getirfinalapp.ProductsRepository
 import com.example.getirfinalapp.data.database.ProductDao
-import com.example.getirfinalapp.data.model.SuggestedProductItem
 import com.example.getirfinalapp.data.model.GeneralProductItem
+import com.example.getirfinalapp.data.model.SuggestedProductItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -30,7 +30,6 @@ class BasketViewModel @Inject constructor(
     private val _formattedTotalPrice = MutableLiveData<String>()
     val formattedTotalPrice: LiveData<String> get() = _formattedTotalPrice
 
-
     fun increaseQuantity(suggestedProductItem: SuggestedProductItem) {
         viewModelScope.launch {
             val existingProduct = productDao.getProductById(suggestedProductItem.id)
@@ -45,12 +44,9 @@ class BasketViewModel @Inject constructor(
 
         getProductsFromLocal()
 
-
-
         _quantity.value = _quantity.value!! + 1
 
         _totalPrice.value = suggestedProductItem.price?.let { _totalPrice.value?.plus(it) }
-
     }
 
     fun increaseQuantity(productX: GeneralProductItem) {
@@ -73,26 +69,21 @@ class BasketViewModel @Inject constructor(
     fun updateProductToLocal(suggestedProductItem: SuggestedProductItem) {
         viewModelScope.launch {
             productDao.updateProduct(suggestedProductItem)
-
         }
     }
 
     fun updateProductToLocal(generalProductItem: GeneralProductItem) {
         viewModelScope.launch {
             productDao.updateProduct(generalProductItem.copy(quantity = (quantity.value)?.plus(1)))
-
         }
     }
 
     fun getProductsFromLocal() {
-
         viewModelScope.launch {
             productDao.getProducts().collect {
                 _productsInBasket.value = it
             }
-
         }
-
     }
 
     fun deleteProductsFromLocal() {
@@ -104,7 +95,7 @@ class BasketViewModel @Inject constructor(
     fun clearBasket() {
         viewModelScope.launch {
             deleteProductsFromLocal() // Mevcut fonksiyonunuz
-            _totalPrice.value = 0.0  // Total price'ı sıfırla
+            _totalPrice.value = 0.0 // Total price'ı sıfırla
         }
     }
 }

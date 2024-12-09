@@ -7,8 +7,8 @@ import java.util.Locale
 object PriceFormatter {
     private val turkishNumberFormat = DecimalFormat("#,##0.00 ₺").apply {
         decimalFormatSymbols = DecimalFormatSymbols(Locale("tr", "TR")).apply {
-            groupingSeparator = '.'  // Binlik ayracı için nokta
-            decimalSeparator = ','   // Ondalık ayracı için virgül
+            groupingSeparator = '.' // Binlik ayracı için nokta
+            decimalSeparator = ',' // Ondalık ayracı için virgül
         }
     }
 

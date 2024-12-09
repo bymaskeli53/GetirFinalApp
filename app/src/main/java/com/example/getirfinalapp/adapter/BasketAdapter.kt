@@ -11,8 +11,6 @@ class BasketAdapter(val productsInBasket: List<GeneralProductItem>) : RecyclerVi
     inner class BasketViewHolder(val binding: ItemBasketBinding) :
         RecyclerView.ViewHolder(binding.root)
 
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BasketViewHolder {
         val binding = ItemBasketBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return BasketViewHolder(binding)
@@ -26,7 +24,5 @@ class BasketAdapter(val productsInBasket: List<GeneralProductItem>) : RecyclerVi
         holder.binding.tvBasket.text = productsInBasket[position].name
         holder.binding.tvPrice.text = productsInBasket[position].price.toString()
         holder.binding.tvQuantity.text = productsInBasket[position].quantity.toString()
-
-
     }
 }

@@ -9,7 +9,6 @@ import javax.inject.Inject
 
 class RemoteDataSource @Inject constructor(val apiService: GetirApiService) {
 
-
     suspend fun fetchProducts(): ApiResult<List<ProductModelItem>> {
         return safeApiCall {
             apiService.fetchProducts()

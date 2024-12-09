@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -21,16 +20,16 @@ import com.example.getirfinalapp.R
 import com.example.getirfinalapp.adapter.BaseProductsAdapter
 import com.example.getirfinalapp.adapter.ProductsAdapter
 import com.example.getirfinalapp.adapter.SuggestedProductsAdapter
-import com.example.getirfinalapp.util.animatePrice
-import com.example.getirfinalapp.util.autoCleared
-import com.example.getirfinalapp.data.model.SuggestedProductItem
 import com.example.getirfinalapp.data.model.GeneralProductItem
+import com.example.getirfinalapp.data.model.SuggestedProductItem
 import com.example.getirfinalapp.databinding.FragmentListingBinding
-import com.example.getirfinalapp.util.hide
-import com.example.getirfinalapp.util.invisible
 import com.example.getirfinalapp.network.ApiResult
 import com.example.getirfinalapp.ui.viewmodel.BasketViewModel
 import com.example.getirfinalapp.ui.viewmodel.ProductViewModel
+import com.example.getirfinalapp.util.animatePrice
+import com.example.getirfinalapp.util.autoCleared
+import com.example.getirfinalapp.util.hide
+import com.example.getirfinalapp.util.invisible
 import com.example.getirfinalapp.util.show
 import com.example.getirfinalapp.util.showToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -45,7 +44,6 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
     private val productViewModel: ProductViewModel by viewModels()
 
     private var toolbar: Toolbar? = null
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -68,7 +66,6 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
             binding.rvSuggested.rootView.findViewById<ImageView>(R.id.iv_plus)
         })
 
-
         viewModel.totalPrice.observe(viewLifecycleOwner, {
             val precisedTotalPrice =
                 Math.round(viewModel.totalPrice.value?.times(1000.0) ?: 1.0) / 1000.0
@@ -88,21 +85,20 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
                             val data = resource.data
 
                             if (data != null) {
-                                val productsAdapter = ProductsAdapter(listener = object :
-                                    BaseProductsAdapter.AddItemClickListener<GeneralProductItem> {
-                                    override fun onAddItemClick(item: GeneralProductItem) {
-                                        viewModel.increaseQuantity(item)
-                                        viewModel.insertProductToLocal(item)
-                                        viewModel.updateProductToLocal(item)
-                                    }
-                                }, items = data!![0].products)
-                                binding.rvProducts.layoutManager = GridLayoutManager(context, 3)
+                                val productsAdapter = ProductsAdapter(
+                                    listener = object :
+                                        BaseProductsAdapter.AddItemClickListener<GeneralProductItem> {
+                                        override fun onAddItemClick(item: GeneralProductItem) {
+                                            viewModel.increaseQuantity(item)
+                                            viewModel.insertProductToLocal(item)
+                                            viewModel.updateProductToLocal(item)
+                                        }
+                                    },
+                                    items = data!![0].products
+                                )
+                                binding.rvProducts.layoutManager = GridLayoutManager(context, SPAN_COUNT)
                                 binding.rvProducts.adapter = productsAdapter
-
-
                             }
-
-
                         }
 
                         is ApiResult.Error -> {
@@ -117,7 +113,6 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
                         ApiResult.NetworkError -> showToast(message = getString(R.string.no_internet_connection))
                         ApiResult.UnknownError -> showToast(message = getString(R.string.an_unkown_error_occured))
                     }
-
                 }
             }
         }
@@ -130,20 +125,24 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
                             val data = apiResult.data
                             if (data != null) {
                                 val suggestedProductsAdapterItem =
-                                    SuggestedProductsAdapter(listener = object :
-                                        BaseProductsAdapter.AddItemClickListener<SuggestedProductItem> {
-                                        override fun onAddItemClick(item: SuggestedProductItem) {
-                                            viewModel.increaseQuantity(item)
-                                            viewModel.insertProductToLocal(item)
-                                            viewModel.updateProductToLocal(item)
+                                    SuggestedProductsAdapter(
+                                        listener = object :
+                                            BaseProductsAdapter.AddItemClickListener<SuggestedProductItem> {
+                                            override fun onAddItemClick(item: SuggestedProductItem) {
+                                                viewModel.increaseQuantity(item)
+                                                viewModel.insertProductToLocal(item)
+                                                viewModel.updateProductToLocal(item)
+                                            }
+                                        },
+                                        items = data[0].products,
+                                        onItemClick = { position ->
+                                            val action =
+                                                ListingFragmentDirections.Companion.actionListingFragmentToDetailFragment(
+                                                    apiResult.data[0].products[position]
+                                                )
+                                            findNavController().navigate(action)
                                         }
-                                    }, items = data!![0].products, onItemClick = { position ->
-                                        val action =
-                                            ListingFragmentDirections.Companion.actionListingFragmentToDetailFragment(
-                                                apiResult.data[0].products[position]
-                                            )
-                                        findNavController().navigate(action)
-                                    })
+                                    )
                                 binding.shimmerSuggested.stopShimmer()
                                 binding.shimmerSuggested.hide()
                                 binding.rvSuggested.show()
@@ -154,10 +153,11 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
                                     false
                                 )
                                 data[0].products[0].price?.times(
-                                    (viewModel.quantity.value?.toDouble()
-                                        ?: 0.0)
+                                    (
+                                        viewModel.quantity.value?.toDouble()
+                                            ?: 0.0
+                                        )
                                 )
-
                             }
                         }
 
@@ -168,7 +168,6 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
                         is ApiResult.Loading -> {
                             binding.shimmerSuggested.startShimmer()
                             binding.rvSuggested.invisible()
-
                         }
 
                         ApiResult.NetworkError -> showToast(message = getString(R.string.no_internet_connection))
@@ -206,5 +205,8 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
             findNavController().navigate(action)
         }
     }
-}
 
+    companion object {
+        private const val SPAN_COUNT = 3
+    }
+}

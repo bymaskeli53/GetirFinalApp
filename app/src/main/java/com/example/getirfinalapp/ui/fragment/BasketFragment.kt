@@ -14,16 +14,15 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.getirfinalapp.R
 import com.example.getirfinalapp.adapter.BasketAdapter
-import com.example.getirfinalapp.util.autoCleared
 import com.example.getirfinalapp.data.model.GeneralProductItem
 import com.example.getirfinalapp.databinding.FragmentBasketBinding
 import com.example.getirfinalapp.databinding.HomeToolbarBinding
-import com.example.getirfinalapp.ui.viewmodel.BasketViewModel
 import com.example.getirfinalapp.ui.activity.MainActivity
+import com.example.getirfinalapp.ui.viewmodel.BasketViewModel
+import com.example.getirfinalapp.util.autoCleared
 import com.example.getirfinalapp.util.hide
 import com.example.getirfinalapp.util.show
 import dagger.hilt.android.AndroidEntryPoint
-
 
 @AndroidEntryPoint
 class BasketFragment : Fragment(R.layout.fragment_basket) {
@@ -59,11 +58,9 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
 
         viewModel.getProductsFromLocal()
 
-
         viewModel.productsInBasket.observe(viewLifecycleOwner, {
             createBasketAdapter(it)
         })
-
 
         toolbar?.findViewById<ImageView>(R.id.iv_delete)?.setOnClickListener {
             createClearBasketDialog()
@@ -87,7 +84,6 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
 
                     (requireActivity() as? MainActivity)?.updateToolbarPrice(0.0)
 
-
                     // viewModel.getProductsFromLocal()
 
                     dialog.dismiss()
@@ -101,6 +97,5 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
 
     private fun makeStrikeThroughText(textView: TextView) {
         textView.paintFlags = textView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-
     }
 }

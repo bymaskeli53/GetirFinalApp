@@ -1,13 +1,12 @@
 package com.example.getirfinalapp.data.database
 
-
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.example.getirfinalapp.data.model.SuggestedProductItem
 import com.example.getirfinalapp.data.model.GeneralProductItem
+import com.example.getirfinalapp.data.model.SuggestedProductItem
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -22,10 +21,8 @@ interface ProductDao {
     @Query("SELECT * FROM PRODUCT")
     fun getProducts(): Flow<List<GeneralProductItem>>
 
-
     @Query("SELECT * FROM PRODUCT WHERE id = :id LIMIT 1")
     suspend fun getProductById(id: String): SuggestedProductItem?
-
 
     @Update
     suspend fun updateProduct(suggestedProductItem: SuggestedProductItem)
@@ -35,5 +32,4 @@ interface ProductDao {
 
     @Query("Delete from PRODUCT")
     suspend fun deleteAllProducts()
-
 }

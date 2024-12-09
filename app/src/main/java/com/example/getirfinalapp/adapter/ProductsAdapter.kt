@@ -2,8 +2,8 @@ package com.example.getirfinalapp.adapter
 
 import coil.load
 import coil.transform.CircleCropTransformation
-import com.example.getirfinalapp.data.model.GeneralProductItem
 import com.example.getirfinalapp.R
+import com.example.getirfinalapp.data.model.GeneralProductItem
 
 class ProductsAdapter(
     val listener: AddItemClickListener<GeneralProductItem>,

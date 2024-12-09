@@ -14,8 +14,8 @@ import androidx.navigation.fragment.navArgs
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.example.getirfinalapp.R
-import com.example.getirfinalapp.util.autoCleared
 import com.example.getirfinalapp.databinding.FragmentDetailBinding
+import com.example.getirfinalapp.util.autoCleared
 import com.example.getirfinalapp.util.invisible
 import com.example.getirfinalapp.util.show
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,16 +34,14 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentDetailBinding.inflate(inflater,container,false)
+        binding = FragmentDetailBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val inflater = TransitionInflater.from(requireContext())
         enterTransition = inflater.inflateTransition(R.transition.slide_in)
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -61,20 +59,17 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         setupToolbar()
 
         initViews()
-
     }
 
     private fun initViews() {
         binding.tvName.text = args.Product.name
         binding.tvPrice.text = args.Product.priceText
 
-
-        binding.ivProduct.load(args.Product.imageURL ?: args.Product.squareThumbnailURL){
+        binding.ivProduct.load(args.Product.imageURL ?: args.Product.squareThumbnailURL) {
             placeholder(R.drawable.basket)
             crossfade(true)
             transformations(CircleCropTransformation())
         }
-
     }
 
     private fun setupToolbar() {

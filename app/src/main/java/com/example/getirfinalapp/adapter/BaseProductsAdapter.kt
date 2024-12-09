@@ -11,7 +11,6 @@ abstract class BaseProductsAdapter<T>(
 ) :
     RecyclerView.Adapter<BaseProductsAdapter<T>.BaseProductsViewHolder>() {
 
-
     abstract fun onBindItem(holder: BaseProductsViewHolder, item: T, position: Int)
 
     inner class BaseProductsViewHolder(val binding: ItemCardBinding) :

@@ -3,8 +3,8 @@ package com.example.getirfinalapp.adapter
 import android.graphics.Paint
 import coil.load
 import coil.transform.CircleCropTransformation
-import com.example.getirfinalapp.data.model.SuggestedProductItem
 import com.example.getirfinalapp.R
+import com.example.getirfinalapp.data.model.SuggestedProductItem
 
 class SuggestedProductsAdapter(
     val listener: AddItemClickListener<SuggestedProductItem>,

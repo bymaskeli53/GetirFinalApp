@@ -16,8 +16,6 @@ package com.example.getirfinalapp.util
  * limitations under the License.
  */
 
-
-
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner

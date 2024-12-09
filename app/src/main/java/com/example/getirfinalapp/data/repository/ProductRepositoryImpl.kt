@@ -16,6 +16,4 @@ class ProductsRepositoryImpl @Inject constructor(val remoteDataSource: RemoteDat
     override suspend fun fetchSuggestedProductList(): ApiResult<List<ProductItem>> {
         return remoteDataSource.fetchSuggestedProducts()
     }
-
-
 }
