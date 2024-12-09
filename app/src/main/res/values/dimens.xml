@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="margin_8">8dp</dimen>
+    <dimen name="margin_16">16dp</dimen>
+    <dimen name="item_card_size">96dp</dimen>
+    <dimen name="iv_plus_size">40dp</dimen>
+
+</resources>

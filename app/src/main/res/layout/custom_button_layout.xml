@@ -20,7 +20,7 @@
         android:layout_height="match_parent"
         android:background="@color/bg_primary_subtle"
         android:gravity="center"
-        android:padding="8dp"
+        android:padding="@dimen/margin_8"
         android:text="Button Text"
         android:textColor="@color/text_primary" />
 </LinearLayout>
