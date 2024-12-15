@@ -9,7 +9,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.getirfinalapp.R
@@ -19,26 +18,20 @@ import com.example.getirfinalapp.databinding.FragmentBasketBinding
 import com.example.getirfinalapp.databinding.HomeToolbarBinding
 import com.example.getirfinalapp.ui.activity.MainActivity
 import com.example.getirfinalapp.ui.viewmodel.BasketViewModel
-import com.example.getirfinalapp.util.autoCleared
 import com.example.getirfinalapp.util.hide
 import com.example.getirfinalapp.util.show
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class BasketFragment : Fragment(R.layout.fragment_basket) {
-
-    private var binding: FragmentBasketBinding by autoCleared()
+class BasketFragment : BaseFragment<FragmentBasketBinding>() {
 
     private val viewModel: BasketViewModel by viewModels()
 
-    override fun onCreateView(
+    override fun inflateBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentBasketBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+        container: ViewGroup?
+    ) = FragmentBasketBinding.inflate(inflater, container, false)
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -78,8 +71,8 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
     private fun createClearBasketDialog() {
         if (viewModel.productsInBasket.value?.size != 0) {
             val dialog = AlertDialog.Builder(requireContext())
-                .setTitle("Sepeti boşaltmak istiyor musunuz?")
-                .setNegativeButton("Evet") { dialog, view ->
+                .setTitle(getString(R.string.do_you_want_to_remove_items_in_the_basket))
+                .setNegativeButton(getString(R.string.yes)) { dialog, view ->
                     viewModel.clearBasket()
 
                     (requireActivity() as? MainActivity)?.updateToolbarPrice(0.0)
@@ -88,7 +81,7 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
 
                     dialog.dismiss()
                 }
-                .setPositiveButton("Hayır") { dialog, _ ->
+                .setPositiveButton(getString(R.string.no)) { dialog, _ ->
                     dialog.dismiss()
                 }.create()
             dialog.show()

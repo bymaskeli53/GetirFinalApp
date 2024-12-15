@@ -4,6 +4,10 @@
     <string name="my_basket">My Basket</string>
     <string name="product_detail">Product Detail</string>
     <string name="no_internet_connection">No Internet Connection</string>
-    <string name="an_unkown_error_occured">An unkown error occured.</string>
+    <string name="an_unknown_error_occurred">An unknown error occurred.</string>
     <string name="products">Products</string>
+    <string name="do_you_want_to_remove_items_in_the_basket">Do you want to remove items in the basket</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="view_binding_can_not_be_null">View Binding can not be null</string>
 </resources>

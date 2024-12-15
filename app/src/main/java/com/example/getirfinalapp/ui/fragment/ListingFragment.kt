@@ -8,7 +8,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -27,7 +26,6 @@ import com.example.getirfinalapp.network.ApiResult
 import com.example.getirfinalapp.ui.viewmodel.BasketViewModel
 import com.example.getirfinalapp.ui.viewmodel.ProductViewModel
 import com.example.getirfinalapp.util.animatePrice
-import com.example.getirfinalapp.util.autoCleared
 import com.example.getirfinalapp.util.hide
 import com.example.getirfinalapp.util.invisible
 import com.example.getirfinalapp.util.show
@@ -36,23 +34,17 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ListingFragment : Fragment(R.layout.fragment_listing) {
-
-    private var binding: FragmentListingBinding by autoCleared()
+class ListingFragment : BaseFragment<FragmentListingBinding>() {
 
     private val viewModel: BasketViewModel by viewModels()
     private val productViewModel: ProductViewModel by viewModels()
 
     private var toolbar: Toolbar? = null
 
-    override fun onCreateView(
+    override fun inflateBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentListingBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+        container: ViewGroup?
+    ) = FragmentListingBinding.inflate(inflater, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -94,9 +86,10 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
                                             viewModel.updateProductToLocal(item)
                                         }
                                     },
-                                    items = data!![0].products
+                                    items = data[0].products
                                 )
-                                binding.rvProducts.layoutManager = GridLayoutManager(context, SPAN_COUNT)
+                                binding.rvProducts.layoutManager =
+                                    GridLayoutManager(context, SPAN_COUNT)
                                 binding.rvProducts.adapter = productsAdapter
                             }
                         }
@@ -111,7 +104,7 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
                         }
 
                         ApiResult.NetworkError -> showToast(message = getString(R.string.no_internet_connection))
-                        ApiResult.UnknownError -> showToast(message = getString(R.string.an_unkown_error_occured))
+                        ApiResult.UnknownError -> showToast(message = getString(R.string.an_unknown_error_occurred))
                     }
                 }
             }
@@ -154,9 +147,9 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
                                 )
                                 data[0].products[0].price?.times(
                                     (
-                                        viewModel.quantity.value?.toDouble()
-                                            ?: 0.0
-                                        )
+                                            viewModel.quantity.value?.toDouble()
+                                                ?: 0.0
+                                            )
                                 )
                             }
                         }
@@ -171,27 +164,11 @@ class ListingFragment : Fragment(R.layout.fragment_listing) {
                         }
 
                         ApiResult.NetworkError -> showToast(message = getString(R.string.no_internet_connection))
-                        ApiResult.UnknownError -> showToast(message = getString(R.string.an_unkown_error_occured))
+                        ApiResult.UnknownError -> showToast(message = getString(R.string.an_unknown_error_occurred))
                     }
                 }
             }
         }
-    }
-
-    private fun showLoading() = with(binding) {
-        shimmerProducts.startShimmer()
-        shimmerSuggested.startShimmer()
-        rvProducts.invisible()
-        rvSuggested.invisible()
-    }
-
-    private fun hideLoading() = with(binding) {
-        shimmerProducts.stopShimmer()
-        shimmerSuggested.stopShimmer()
-        shimmerProducts.hide()
-        shimmerSuggested.hide()
-        rvProducts.show()
-        rvSuggested.show()
     }
 
     private fun setupToolbar() {
