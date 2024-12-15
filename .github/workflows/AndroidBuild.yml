@@ -29,6 +29,8 @@ jobs:
             ${{ runner.os }}-gradle-
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
+      - name: OWASP Dependency Check
+        run: ./gradlew dependencyCheckAnalyze
       - name: Run Detekt
         run: ./gradlew detekt --info --build-cache
         continue-on-error: true
