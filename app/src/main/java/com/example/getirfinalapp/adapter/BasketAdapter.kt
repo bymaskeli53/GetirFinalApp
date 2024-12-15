@@ -6,7 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.getirfinalapp.data.model.GeneralProductItem
 import com.example.getirfinalapp.databinding.ItemBasketBinding
 
-class BasketAdapter(val productsInBasket: List<GeneralProductItem>) : RecyclerView.Adapter<BasketAdapter.BasketViewHolder>() {
+class BasketAdapter(val productsInBasket: List<GeneralProductItem>) :
+    RecyclerView.Adapter<BasketAdapter.BasketViewHolder>() {
 
     inner class BasketViewHolder(val binding: ItemBasketBinding) :
         RecyclerView.ViewHolder(binding.root)

@@ -8,7 +8,7 @@ import com.example.getirfinalapp.data.model.GeneralProductItem
 class ProductsAdapter(
     val listener: AddItemClickListener<GeneralProductItem>,
     items: List<GeneralProductItem>
-) : BaseProductsAdapter<GeneralProductItem>(listener, items) {
+) : BaseProductsAdapter<GeneralProductItem>(items) {
 
     override fun onBindItem(holder: BaseProductsViewHolder, item: GeneralProductItem, position: Int) {
         with(holder.binding) {

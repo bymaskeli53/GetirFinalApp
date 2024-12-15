@@ -10,7 +10,7 @@ class SuggestedProductsAdapter(
     val listener: AddItemClickListener<SuggestedProductItem>,
     items: List<SuggestedProductItem>,
     val onItemClick: (position: Int) -> Unit
-) : BaseProductsAdapter<SuggestedProductItem>(listener, items) {
+) : BaseProductsAdapter<SuggestedProductItem>(items) {
 
     override fun onBindItem(holder: BaseProductsViewHolder, item: SuggestedProductItem, position: Int) {
         with(holder.binding) {

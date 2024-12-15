@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.getirfinalapp.databinding.ItemCardBinding
 
 abstract class BaseProductsAdapter<T>(
-    private val listener: AddItemClickListener<T>,
     private val items: List<T>
 ) :
     RecyclerView.Adapter<BaseProductsAdapter<T>.BaseProductsViewHolder>() {

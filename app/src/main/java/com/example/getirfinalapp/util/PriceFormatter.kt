@@ -4,7 +4,9 @@ import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.util.Locale
 
+private const val FORMATTER_LIMIT = 1000
 object PriceFormatter {
+
     private val turkishNumberFormat = DecimalFormat("#,##0.00 ₺").apply {
         decimalFormatSymbols = DecimalFormatSymbols(Locale("tr", "TR")).apply {
             groupingSeparator = '.' // Binlik ayracı için nokta
@@ -19,7 +21,7 @@ object PriceFormatter {
     // Alternatif format için (gerekirse)
     fun formatPriceAlt(price: Double): String {
         val formatted = turkishNumberFormat.format(price)
-        return if (price >= 1000) {
+        return if (price >= FORMATTER_LIMIT) {
             // Binlik sayılarda formatlama
             val parts = formatted.split(",")
             "${parts[0]},${parts[1]}"
