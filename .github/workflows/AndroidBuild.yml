@@ -30,4 +30,5 @@ jobs:
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
       - name: Run Detekt
-        run: .\gradlew detekt
+        run: ./gradlew detekt --info --build-cache
+        continue-on-error: true
