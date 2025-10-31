@@ -6,7 +6,6 @@
 
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.0.20-purple.svg?style=flat&logo=kotlin)](https://kotlinlang.org)
 [![Android](https://img.shields.io/badge/Android-24%2B-green.svg?style=flat&logo=android)](https://www.android.com)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Build](https://img.shields.io/badge/Build-Passing-brightgreen.svg)](https://github.com/bymaskeli53/GetirFinalApp)
 
 A fully-featured Android shopping application built with modern Android development tools and best practices. This project demonstrates clean architecture, MVVM pattern, and comprehensive use of Jetpack libraries.
