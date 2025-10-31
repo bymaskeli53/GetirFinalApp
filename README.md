@@ -23,7 +23,7 @@ A fully-featured Android shopping application built with modern Android developm
 
 | Products List | Product Details | Shopping Basket |
 |:---:|:---:|:---:|
-| ![Products](products_screen.png) | ![Details](detail_screen.png) | ![Basket](basket_screen.png) |
+| ![Products](screenshots/products_screen.png) | ![Details](screenshots/detail_screen.png) | ![Basket](screenshots/basket_screen.png) |
 | Browse through products with suggested items | View detailed product information | Manage your shopping cart |
 
 </div>
