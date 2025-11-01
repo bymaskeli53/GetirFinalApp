@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Markdown preview styles */
+.markdown-preview {
+  @apply prose prose-slate max-w-none;
+}
+
+.markdown-preview h1 {
+  @apply text-3xl font-bold mb-4 mt-6;
+}
+
+.markdown-preview h2 {
+  @apply text-2xl font-bold mb-3 mt-5;
+}
+
+.markdown-preview h3 {
+  @apply text-xl font-semibold mb-2 mt-4;
+}
+
+.markdown-preview code {
+  @apply bg-gray-100 px-1 py-0.5 rounded text-sm;
+}
+
+.markdown-preview pre {
+  @apply bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto;
+}
+
+.markdown-preview pre code {
+  @apply bg-transparent text-gray-100;
+}
+
+.markdown-preview table {
+  @apply w-full border-collapse my-4;
+}
+
+.markdown-preview th,
+.markdown-preview td {
+  @apply border border-gray-300 px-4 py-2;
+}
+
+.markdown-preview th {
+  @apply bg-gray-100 font-semibold;
+}
+
+.markdown-preview img {
+  @apply max-w-full h-auto rounded-lg;
+}
+
+.markdown-preview a {
+  @apply text-blue-600 hover:text-blue-800 underline;
+}
+
+.markdown-preview ul,
+.markdown-preview ol {
+  @apply my-2 ml-6;
+}
+
+.markdown-preview blockquote {
+  @apply border-l-4 border-gray-300 pl-4 italic my-4;
+}
